@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#102b35" />
+    <meta name="description" content="15 分钟生活圈：把步行可达性、民生设施和服务缺口放到一张可解释地图上。" />
+    <title>15 分钟生活圈 | 社区空间洞察</title>
+    <link rel="stylesheet" href="./assets/site.css" />
+    <script src="./config.js"></script>
+    <script src="./assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="./" aria-label="15 分钟生活圈首页">
+          <span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span>
+          <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+        <nav id="site-nav" class="site-nav" aria-label="主导航">
+          <a href="#capabilities">能做什么</a>
+          <a href="#method">怎么实现</a>
+          <a href="#trust">结果边界</a>
+          <a href="#roadmap">路线图</a>
+          <a class="nav-cta" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero shell">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="eyebrow-dot"></span>社区空间洞察 · 可解释工作流</p>
+          <h1>从一个中心点，<br /><em>读懂 15 分钟</em>步行生活圈</h1>
+          <p class="hero-lede">把真实步行路径、民生设施和服务缺口放到同一张地图上。先呈现可核对的空间证据，再给出有边界的辅助判断。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" data-config-link="demoUrl" href="#demo-status">体验离线 Demo <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#method">了解方法 <span aria-hidden="true">↓</span></a>
+          </div>
+          <p class="hero-note"><span class="status-pip"></span><span data-config-status="demo">离线 Demo 地址待配置，可先查看本地启动说明</span></p>
+        </div>
+        <div class="hero-visual reveal" aria-label="15 分钟步行可达范围示意图" role="img">
+          <div class="visual-label label-top"><span class="label-line"></span>15 MIN WALKABLE AREA</div>
+          <div class="map-card">
+            <div class="map-topline"><span>青禾街区 · 演示视图</span><span class="map-live"><i></i>OFFLINE DEMO</span></div>
+            <svg class="map-svg" viewBox="0 0 640 470" aria-hidden="true">
+              <defs>
+                <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+                  <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#c4d0c8" stroke-width="1" opacity=".55" />
+                </pattern>
+                <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1a4950" flood-opacity=".15" />
+                </filter>
+              </defs>
+              <rect width="640" height="470" fill="#e7eee7" />
+              <rect width="640" height="470" fill="url(#grid)" />
+              <path class="river" d="M-20 124 C100 88 128 178 228 150 S369 87 444 137 S570 217 680 170 L680 258 C548 296 482 225 396 253 S242 313 158 250 S56 205-20 247Z" />
+              <path class="road road-wide" d="M-30 383 C128 320 161 360 254 310 S397 177 676 78" />
+              <path class="road" d="M-20 300 C101 274 196 283 274 227 S412 94 674 117" />
+              <path class="road" d="M45 -20 C123 93 126 188 188 247 S316 363 363 490" />
+              <path class="road" d="M276 -20 C265 90 314 142 375 209 S494 323 515 490" />
+              <path class="road" d="M485 -20 C440 87 462 144 544 198 S619 322 612 490" />
+              <path class="minor-road" d="M-20 202 L193 198 L274 227 L410 218 L680 267" />
+              <path class="minor-road" d="M54 470 L112 358 L188 247 L229 -20" />
+              <path class="minor-road" d="M340 -20 L375 209 L360 300 L278 490" />
+              <path class="minor-road" d="M505 0 L461 144 L544 198 L680 213" />
+              <path class="reach-shadow" d="M328 88 C395 86 477 123 500 192 C527 274 493 352 417 391 C348 427 243 410 192 348 C136 280 151 183 222 126 C252 102 289 89 328 88Z" filter="url(#soft-shadow)" />
+              <path class="reach-area" d="M328 88 C395 86 477 123 500 192 C527 274 493 352 417 391 C348 427 243 410 192 348 C136 280 151 183 222 126 C252 102 289 89 328 88Z" />
+              <path class="reach-edge" d="M328 88 C395 86 477 123 500 192 C527 274 493 352 417 391 C348 427 243 410 192 348 C136 280 151 183 222 126 C252 102 289 89 328 88Z" />
+              <g class="facility market" transform="translate(258 178)"><circle r="13"/><path d="M-6 2h12M-5-3h10v10H-5z"/></g>
+              <g class="facility pharmacy" transform="translate(408 166)"><circle r="13"/><path d="M0-7v14M-7 0H7"/></g>
+              <g class="facility school" transform="translate(420 309)"><circle r="13"/><path d="m-7-1 7-6 7 6v8H-7zM-2 7V2h4v5"/></g>
+              <g class="facility market" transform="translate(229 310)"><circle r="13"/><path d="M-6 2h12M-5-3h10v10H-5z"/></g>
+              <g class="facility pharmacy" transform="translate(348 362)"><circle r="13"/><path d="M0-7v14M-7 0H7"/></g>
+              <g class="center-pin" transform="translate(330 238)"><circle class="pin-halo" r="31"/><circle class="pin-core" r="12"/><path d="M0-4v8M-4 0h8"/></g>
+              <text class="map-text" x="344" y="271">分析中心点</text>
+              <text class="map-text quiet" x="75" y="97">河道 / 硬约束</text>
+              <text class="map-text quiet" x="466" y="427">生活服务街区</text>
+            </svg>
+            <div class="map-bottomline"><span><i class="legend-circle"></i>15 分钟可达范围</span><span><i class="legend-pin"></i>分析中心点</span><span>示意地图 · 非真实结论</span></div>
+          </div>
+          <div class="visual-label label-bottom"><strong>1 km</strong><span>分类服务判断<br />独立于步行圈</span></div>
+        </div>
+      </section>
+
+      <section class="stats-strip shell reveal" aria-label="项目核心指标">
+        <div><strong>15<small>min</small></strong><span>步行可达范围</span></div>
+        <div><strong>1<small>km</small></strong><span>分类服务判断</span></div>
+        <div><strong>03</strong><span>首期设施类别</span></div>
+        <div><strong>∞</strong><span>保留未知与限制</span></div>
+      </section>
+
+      <section id="capabilities" class="section section-light">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <p class="eyebrow">WHY IT MATTERS / 为什么需要它</p>
+            <h2>不只画一个圆，<br /><em>而是解释一条路。</em></h2>
+            <p>直线距离、设施数量和一句“覆盖良好”，都不足以说明真实的社区步行体验。生活圈把判断拆开，把证据留下。</p>
+          </div>
+          <div class="question-grid">
+            <article class="question-card reveal"><span class="card-index">01</span><div class="question-icon route-icon" aria-hidden="true"><i></i><i></i><i></i></div><h3>15 分钟能走到哪里？</h3><p>从中心点出发，基于步行路网展示真实可达范围。绕行、障碍、未知区域和计算预算都被明确保留。</p><a href="#method" class="card-link">查看可达性方法 <span aria-hidden="true">↗</span></a></article>
+            <article class="question-card question-card-dark reveal"><span class="card-index">02</span><div class="question-icon gap-icon" aria-hidden="true"><i></i><i></i><i></i></div><h3>1 公里内缺什么？</h3><p>逐类检查菜市场、药店和小学，不把“15 分钟不可达”替代为服务缺口，也不把数据不足当成缺失。</p><a href="#trust" class="card-link">理解两套规则 <span aria-hidden="true">↗</span></a></article>
+          </div>
+          <div class="capability-head reveal"><p class="eyebrow">CAPABILITIES / 你可以完成什么</p><h2>从选点，到一份可复核的体检报告。</h2></div>
+          <div class="capability-grid">
+            <article class="capability reveal"><span class="cap-number">01</span><h3>选择分析位置</h3><p>使用预设样例、地图选点或输入经纬度，清楚知道本次分析从哪里开始。</p><span class="cap-tag">中心点 / 坐标</span></article>
+            <article class="capability reveal"><span class="cap-number">02</span><h3>查看步行生活圈</h3><p>在地图上查看 15 分钟范围、已知可达区域、未知区域和计算质量。</p><span class="cap-tag">路网 / 等时圈</span></article>
+            <article class="capability reveal"><span class="cap-number">03</span><h3>核对民生设施</h3><p>按类别筛选菜市场、药店和小学，查看名称、位置、圈内状态及来源证据。</p><span class="cap-tag">设施 / 证据</span></article>
+            <article class="capability reveal"><span class="cap-number">04</span><h3>生成体检报告</h3><p>汇总条件、结果、服务缺口、未知部分、数据来源和限制说明，方便复核。</p><span class="cap-tag">结果 / 限制</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="method" class="section section-dark">
+        <div class="shell">
+          <div class="method-heading reveal"><div><p class="eyebrow eyebrow-light">METHOD / HOW IT WORKS</p><h2>让地图成为证据，<br /><em>让结论保留边界。</em></h2></div><p>前端负责把过程和结果讲清楚，后端负责任务编排与证据留存，百度与 OSM 提供不同层次的空间数据。Demo 则以固定模拟数据复现完整流程。</p></div>
+          <div class="architecture reveal">
+            <div class="arch-row arch-front"><div class="arch-label"><span class="arch-dot"></span>交互层</div><div class="arch-items"><span>React + TypeScript</span><span>地图 / 筛选 / 报告</span><span>状态与结果适配</span></div></div>
+            <div class="arch-connector"><i></i><i></i><i></i></div>
+            <div class="arch-row arch-back"><div class="arch-label"><span class="arch-dot"></span>分析层</div><div class="arch-items"><span>FastAPI 任务服务</span><span>百度步行服务</span><span>OSM + 空间分析</span></div></div>
+            <div class="arch-connector"><i></i><i></i><i></i></div>
+            <div class="arch-row arch-result"><div class="arch-label"><span class="arch-dot"></span>证据层</div><div class="arch-items"><span>中心点与条件</span><span>圈面与设施</span><span>质量 / 来源 / 限制</span></div></div>
+          </div>
+          <div class="algorithm-grid">
+            <article class="algorithm reveal"><span class="algo-label">E8.2</span><h3>百度边界搜索</h3><p>通过多个方向、局部扫描和边界细化获取 15 分钟圈证据，结果保留预算停止和未知区域。</p><span class="algo-status">浏览器工作台入口</span></article>
+            <article class="algorithm reveal"><span class="algo-label">HYBRID 1.5</span><h3>OSM ＋ 百度</h3><p>使用 OSM 路网辅助范围构建，再用百度步行结果验证；硬约束与显示几何分开处理。</p><span class="algo-status">浏览器工作台入口</span></article>
+            <article class="algorithm algorithm-muted reveal"><span class="algo-label">E8.3</span><h3>POI 引导联合构圈</h3><p>离线实验能力，保留在算法与后端工具中，当前不作为浏览器或生产 HTTP 入口。</p><span class="algo-status">离线实验 · 未上线</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="trust" class="section section-paper">
+        <div class="shell trust-layout">
+          <div class="trust-intro reveal"><p class="eyebrow">TRUST & LIMITS / 可信度边界</p><h2>不确定性不是瑕疵，<br /><em>是结果的一部分。</em></h2><p>一个好的空间工具不应该用完整的视觉效果掩盖缺失数据。每一次分析都要说明它知道什么、还不知道什么，以及结论不能推到哪里。</p></div>
+          <div class="trust-list">
+            <article class="trust-item reveal"><span class="trust-symbol good">+</span><div><h3>Demo 是可操作的模拟数据演示</h3><p>用于验证用户流程、地图、统计和报告的一致性，不代表真实社区结论。</p></div></article>
+            <article class="trust-item reveal"><span class="trust-symbol split">↔</span><div><h3>15 分钟与 1 公里是两套独立指标</h3><p>一个回答“能走到哪里”，一个回答“周边是否存在某类设施”，页面不会相互替代。</p></div></article>
+            <article class="trust-item reveal"><span class="trust-symbol unknown">?</span><div><h3>未知区域不会被静默填成不可达</h3><p>数据不足、部分结果、预算停止和服务异常都会保留状态，并进入结果说明。</p></div></article>
+            <article class="trust-item reveal"><span class="trust-symbol boundary">□</span><div><h3>单点分析不等于全社区评价</h3><p>设施数量不代表容量、质量、营业状态或使用资格，也不自动生成综合评分。</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap" class="section section-light roadmap-section">
+        <div class="shell">
+          <div class="section-heading compact reveal"><p class="eyebrow">ROADMAP / 当前阶段</p><h2>先把可复现的体验<br /><em>交到用户手里。</em></h2></div>
+          <div class="roadmap reveal">
+            <div class="road-step active"><span class="road-mark">01</span><div><strong>项目发布站</strong><p>静态介绍、方法、边界和导航</p></div><b>当前</b></div>
+            <div class="road-step active"><span class="road-mark">02</span><div><strong>离线 Demo</strong><p>固定场景、四类状态、完整报告</p></div><b>可运行</b></div>
+            <div class="road-step"><span class="road-mark">03</span><div><strong>受控 API</strong><p>独立后端、鉴权、限流和预算</p></div><b>准备中</b></div>
+            <div class="road-step"><span class="road-mark">04</span><div><strong>正式开放</strong><p>真实样例核验与独立精度材料</p></div><b>前置条件</b></div>
+          </div>
+          <div id="demo-status" class="launch-panel reveal">
+            <div><span class="launch-kicker">START HERE / 从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">在线 Demo 地址尚未配置。你可以先在 Demo 仓库本地启动，完整走一遍“选点 → 体检 → 报告”流程。</p></div>
+            <div class="launch-actions"><a class="button button-light" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="repositoryUrl" href="#demo-status">查看源代码 <span aria-hidden="true">↗</span></a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div class="footer-brand"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span><span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span></a><p>把社区步行可达性和民生设施分布放到一张可解释地图上。</p></div>
+        <div><p class="footer-label">PROJECT</p><a href="#capabilities">产品能力</a><a href="#method">方法与架构</a><a href="#trust">可信度边界</a></div>
+        <div><p class="footer-label">LINKS</p><a data-config-link="demoUrl" href="#demo-status">在线 Demo</a><a data-config-link="appUrl" href="#demo-status">正式工作台</a><a data-config-link="repositoryUrl" href="#demo-status">GitHub 源码</a></div>
+        <div><p class="footer-label">STATUS</p><span>静态介绍站 · 可独立访问</span><span data-config-status="app">正式分析服务尚未对公网开放</span><a data-config-link="releasesUrl" href="#demo-status">版本与 Releases ↗</a></div>
+      </div>
+      <div class="shell footer-bottom"><span>15 分钟生活圈 · 项目发布站</span><span>Demo 数据为模拟数据，不是真实社区结论。</span></div>
+    </footer>
+  </body>
+</html>

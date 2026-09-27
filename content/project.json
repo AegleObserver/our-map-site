@@ -1,0 +1,14 @@
+{
+  "name": "15 分钟生活圈",
+  "positioning": "面向社区和街道空间洞察的可视化工具",
+  "metrics": {
+    "walkableMinutes": 15,
+    "serviceDistanceKm": 1,
+    "facilityCategories": ["菜市场", "药店", "小学"]
+  },
+  "boundaries": [
+    "Demo 使用固定模拟数据，不代表真实社区结论。",
+    "15 分钟步行圈与 1 公里分类服务判断是两套独立指标。",
+    "GitHub Pages 只承载静态页面，正式分析服务需要独立后端。"
+  ]
+}
