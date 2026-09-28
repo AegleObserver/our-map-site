@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#102b35" />
+    <meta name="description" content="15 分钟生活圈 · 本机运行帮助文档：准备工作、具体操作与运行网站。" />
+    <title>帮助文档 | 15 分钟生活圈</title>
+    <link rel="stylesheet" href="../assets/site.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../" aria-label="15 分钟生活圈首页">
+          <span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span>
+          <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
+        </a>
+        <nav id="site-nav" class="site-nav" aria-label="帮助文档导航">
+          <a href="../#capabilities">能做什么</a>
+          <a href="../#method">怎么实现</a>
+          <a href="../#trust">结果边界</a>
+          <a href="../">返回首页</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="doc-main">
+      <div class="shell">
+        <div class="doc-heading">
+          <p class="eyebrow">HELP / 帮助文档</p>
+          <h1>本机运行指南</h1>
+          <p>从准备环境到在浏览器中打开分析工作台，按以下步骤依次操作即可。</p>
+        </div>
+
+        <section id="preparation" class="doc-section">
+          <h2><span class="doc-index">01</span>准备工作</h2>
+          <div class="doc-card">
+            <h3>设备与系统要求</h3>
+            <ul>
+              <li><strong>操作系统：</strong>Windows 10/11、macOS 12+ 或主流 Linux 发行版（64 位）。</li>
+              <li><strong>内存：</strong>建议 8 GB 及以上，路网分析与报告生成需要一定内存开销。</li>
+              <li><strong>磁盘空间：</strong>至少预留 2 GB，用于安装包、OSM 路网数据与构建产物。</li>
+              <li><strong>浏览器：</strong>Chrome / Edge / Firefox 近两年内的稳定版本。</li>
+            </ul>
+          </div>
+          <div class="doc-card">
+            <h3>必需软件</h3>
+            <ul>
+              <li><strong>Node.js：</strong>18 或更高版本（含 npm）。</li>
+              <li><strong>Python：</strong>3.10 或更高版本，用于启动后端服务。</li>
+              <li><strong>Git：</strong>用于克隆源码仓库（可选，也可直接下载压缩包）。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="setup" class="doc-section">
+          <h2><span class="doc-index">02</span>具体操作</h2>
+          <div class="doc-card">
+            <h3>下载安装包</h3>
+            <p>从 <a href="https://github.com/PennEwan/Baidu-map">GitHub 源码仓库</a> 克隆或下载最新版本：</p>
+            <pre><code>git clone https://github.com/PennEwan/Baidu-map.git
+cd Baidu-map</code></pre>
+          </div>
+          <div class="doc-card">
+            <h3>申请百度 API 并配置 AK</h3>
+            <ol>
+              <li>登录百度地图开放平台，创建「浏览器端」应用，获取 API Key（AK）。</li>
+              <li>将 AK 配置到本地环境变量中，供后端读取：</li>
+            </ol>
+            <pre><code># Windows (PowerShell)
+setx BAIDU_MAP_AK "你的百度AK"
+
+# macOS / Linux
+export BAIDU_MAP_AK="你的百度AK"</code></pre>
+            <p class="doc-tip">环境变量配置后需要重新打开终端或重启 IDE 才会生效。</p>
+          </div>
+          <div class="doc-card">
+            <h3>下载 OSM 路网数据</h3>
+            <p>从 OpenStreetMap 获取目标区域的路网数据，放入项目数据目录：</p>
+            <pre><code># 示例：通过 overpass-api 下载某区域路网并保存
+curl -o data/roads.osm "https://overpass-api.de/api/interpreter?data=[out:json];way[highway]({{bbox}});out;"
+# 或直接使用项目文档中提供的预处理数据</code></pre>
+          </div>
+        </section>
+
+        <section id="run" class="doc-section">
+          <h2><span class="doc-index">03</span>运行网站</h2>
+          <div class="doc-card">
+            <h3>启动后端</h3>
+            <pre><code>pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000</code></pre>
+          </div>
+          <div class="doc-card">
+            <h3>启动前端</h3>
+            <pre><code>npm install
+npm run dev</code></pre>
+          </div>
+          <div class="doc-card">
+            <h3>在浏览器中打开</h3>
+            <p>启动成功后，在浏览器中访问 <code>http://localhost:5173</code>（或终端提示的本地地址），即可进入分析工作台。</p>
+            <p class="doc-tip">前端开发服务器会代理后端请求，确认后端已在 <code>:8000</code> 端口运行即可。</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-bottom"><span>15 分钟生活圈 · 帮助文档</span><span>Demo 数据为模拟数据，不是真实社区结论。</span></div>
+    </footer>
+  </body>
+</html>
