@@ -12,6 +12,23 @@
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <nav class="side-nav" aria-label="页面导航">
+      <svg class="side-nav-path" viewBox="0 0 40 600" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M20 0 L35 80 L5 160 L20 240 L35 320 L5 400 L20 480 L28 540 L12 570 L20 600" fill="none" stroke="rgba(120,72,20,.25)" stroke-width="6" stroke-dasharray="10 8"/>
+        <path class="side-nav-progress" d="M20 0 L35 80 L5 160 L20 240 L35 320 L5 400 L20 480 L28 540 L12 570 L20 600" fill="none" stroke="#8b5a2b" stroke-width="6" stroke-dasharray="10 8"/>
+      </svg>
+      <div class="side-nav-marker" role="slider" aria-label="页面进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="#fff"/></svg>
+      </div>
+      <ol class="side-nav-labels">
+        <li data-target="main-content">概览</li>
+        <li data-target="capabilities">能力</li>
+        <li data-target="screenshots">截图</li>
+        <li data-target="method">方法</li>
+        <li data-target="trust">边界</li>
+        <li data-target="roadmap">路线</li>
+      </ol>
+    </nav>
     <header class="site-header">
       <div class="shell header-inner">
         <a class="brand" href="./" aria-label="15 分钟生活圈首页">
@@ -42,7 +59,6 @@
           <p class="hero-note"><span class="status-pip"></span><span data-config-status="demo">离线 Demo 地址待配置，可先查看本地启动说明</span></p>
         </div>
         <div class="hero-visual reveal" aria-label="15 分钟步行可达范围示意图" role="img">
-          <div class="visual-label label-top"><span class="label-line"></span>15 MIN WALKABLE AREA</div>
           <div class="map-card">
             <div class="map-topline"><span>青禾街区 · 演示视图</span><span class="map-live"><i></i>OFFLINE DEMO</span></div>
             <svg class="map-svg" viewBox="0 0 640 470" aria-hidden="true">
@@ -81,13 +97,11 @@
             </svg>
             <div class="map-bottomline"><span><i class="legend-circle"></i>15 分钟可达范围</span><span><i class="legend-pin"></i>分析中心点</span><span>示意地图 · 非真实结论</span></div>
           </div>
-          <div class="visual-label label-bottom"><strong>1 km</strong><span>分类服务判断<br />独立于步行圈</span></div>
         </div>
       </section>
 
       <section class="stats-strip shell reveal" aria-label="项目核心指标">
         <div><strong>15<small>min</small></strong><span>步行可达范围</span></div>
-        <div><strong>1<small>km</small></strong><span>分类服务判断</span></div>
         <div><strong>03</strong><span>首期设施类别</span></div>
         <div><strong>∞</strong><span>保留未知与限制</span></div>
       </section>
@@ -113,6 +127,23 @@
         </div>
       </section>
 
+      <section id="screenshots" class="section section-light">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <p class="eyebrow">SCREENSHOTS / 产品截图</p>
+            <h2>从选点到报告，<br /><em>每一步都有据可查。</em></h2>
+          </div>
+          <div class="screenshot-carousel reveal">
+            <div class="screenshot-track">
+              <figure class="screenshot-card"><img src="assets/screenshots/01-select-location.png" alt="选择分析位置" /><figcaption>选择分析位置</figcaption></figure>
+              <figure class="screenshot-card"><img src="assets/screenshots/02-walkable-area.png" alt="查看步行生活圈" /><figcaption>查看步行生活圈</figcaption></figure>
+              <figure class="screenshot-card"><img src="assets/screenshots/03-facilities.png" alt="核对民生设施" /><figcaption>核对民生设施</figcaption></figure>
+              <figure class="screenshot-card"><img src="assets/screenshots/04-report.png" alt="生成体检报告" /><figcaption>生成体检报告</figcaption></figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="method" class="section section-dark">
         <div class="shell">
           <div class="method-heading reveal"><div><p class="eyebrow eyebrow-light">METHOD / HOW IT WORKS</p><h2>让地图成为证据，<br /><em>让结论保留边界。</em></h2></div><p>前端负责把过程和结果讲清楚，后端负责任务编排与证据留存，百度与 OSM 提供不同层次的空间数据。Demo 则以固定模拟数据复现完整流程。</p></div>
@@ -123,12 +154,25 @@
             <div class="arch-connector"><i></i><i></i><i></i></div>
             <div class="arch-row arch-result"><div class="arch-label"><span class="arch-dot"></span>证据层</div><div class="arch-items"><span>中心点与条件</span><span>圈面与设施</span><span>质量 / 来源 / 限制</span></div></div>
           </div>
-          <div class="algorithm-grid">
-            <article class="algorithm reveal"><span class="algo-label">E8.2</span><h3>百度边界搜索</h3><p>通过多个方向、局部扫描和边界细化获取 15 分钟圈证据，结果保留预算停止和未知区域。</p><span class="algo-status">浏览器工作台入口</span></article>
-            <article class="algorithm reveal"><span class="algo-label">HYBRID 1.5</span><h3>OSM ＋ 百度</h3><p>使用 OSM 路网辅助范围构建，再用百度步行结果验证；硬约束与显示几何分开处理。</p><span class="algo-status">浏览器工作台入口</span></article>
-            <article class="algorithm algorithm-muted reveal"><span class="algo-label">E8.3</span><h3>POI 引导联合构圈</h3><p>离线实验能力，保留在算法与后端工具中，当前不作为浏览器或生产 HTTP 入口。</p><span class="algo-status">离线实验 · 未上线</span></article>
-          </div>
-        </div>
+           <div class="algorithm-grid">
+             <article class="algorithm reveal"><span class="algo-label">E8.2</span><h3>百度边界搜索</h3><p>通过多个方向、局部扫描和边界细化获取 15 分钟圈证据，结果保留预算停止和未知区域。</p><span class="algo-status">浏览器工作台入口</span></article>
+             <article class="algorithm reveal"><span class="algo-label">HYBRID 1.5</span><h3>OSM ＋ 百度</h3><p>使用 OSM 路网辅助范围构建，再用百度步行结果验证；硬约束与显示几何分开处理。</p><span class="algo-status">浏览器工作台入口</span></article>
+             <article class="algorithm algorithm-muted reveal"><span class="algo-label">E8.3</span><h3>POI 引导联合构圈</h3><p>离线实验能力，保留在算法与后端工具中，当前不作为浏览器或生产 HTTP 入口。</p><span class="algo-status">离线实验 · 未上线</span></article>
+           </div>
+           <div class="perf-table-wrap reveal">
+             <table class="perf-table">
+               <thead>
+                 <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+               </thead>
+               <tbody>
+                 <tr><td>单次构圈耗时</td><td></td><td></td></tr>
+                 <tr><td>边界划分精度</td><td></td><td></td></tr>
+                 <tr><td>设施匹配准确率</td><td></td><td></td></tr>
+                 <tr><td>报告生成耗时</td><td></td><td></td></tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
       </section>
 
       <section id="trust" class="section section-paper">

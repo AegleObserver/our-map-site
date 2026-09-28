@@ -61,4 +61,93 @@
   } else {
     revealItems.forEach((item) => item.classList.add('is-visible'));
   }
+
+  const sideNav = document.querySelector('.side-nav');
+  if (sideNav) {
+    const marker = sideNav.querySelector('.side-nav-marker');
+    const progress = sideNav.querySelector('.side-nav-progress');
+    const navLabels = sideNav.querySelectorAll('.side-nav-labels li');
+    const navHeight = sideNav.offsetHeight;
+    const pathLength = progress.getTotalLength();
+    progress.style.strokeDasharray = pathLength;
+    progress.style.strokeDashoffset = pathLength;
+
+    let isDragging = false;
+
+    const sectionMap = [
+      { el: document.getElementById('main-content'), label: navLabels[0] },
+      { el: document.getElementById('capabilities'), label: navLabels[1] },
+      { el: document.getElementById('screenshots'), label: navLabels[2] },
+      { el: document.getElementById('method'), label: navLabels[3] },
+      { el: document.getElementById('trust'), label: navLabels[4] },
+      { el: document.getElementById('roadmap'), label: navLabels[5] }
+    ];
+
+    function updateMarker(ratio) {
+      const clamped = Math.max(0, Math.min(1, ratio));
+      const point = progress.getPointAtLength(clamped * pathLength);
+      const svgEl = progress.ownerSVGElement;
+      const svgRect = svgEl.getBoundingClientRect();
+      const scaleX = svgRect.width / 40;
+      const scaleY = svgRect.height / 600;
+      const x = (point.x * scaleX) - 17;
+      const y = (point.y * scaleY) - 17;
+      marker.style.left = x + 'px';
+      marker.style.top = y + 'px';
+      marker.setAttribute('aria-valuenow', Math.round(clamped * 100));
+      progress.style.strokeDashoffset = pathLength * (1 - clamped);
+
+      let activeIdx = 0;
+      sectionMap.forEach((s, i) => {
+        const rect = s.el.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2) activeIdx = i;
+      });
+      sectionMap.forEach((s, i) => s.label.classList.toggle('active', i === activeIdx));
+    }
+
+    function scrollToRatio(ratio) {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const target = Math.max(0, Math.min(1, ratio)) * maxScroll;
+      window.scrollTo({ top: target });
+    }
+
+    marker.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      marker.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    marker.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const rect = sideNav.getBoundingClientRect();
+      const ratio = (e.clientY - rect.top) / navHeight;
+      updateMarker(ratio);
+      scrollToRatio(ratio);
+    });
+
+    marker.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+
+    marker.addEventListener('keydown', (e) => {
+      const current = parseFloat(marker.getAttribute('aria-valuenow')) / 100;
+      if (e.key === 'ArrowDown') { e.preventDefault(); scrollToRatio(current + 0.1); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); scrollToRatio(current - 0.1); }
+    });
+
+    navLabels.forEach((label) => {
+      label.addEventListener('click', () => {
+        const target = document.getElementById(label.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      if (isDragging) return;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      updateMarker(maxScroll > 0 ? window.scrollY / maxScroll : 0);
+    }, { passive: true });
+
+    updateMarker(0);
+  }
 })();
