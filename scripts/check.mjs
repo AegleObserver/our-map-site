@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const requiredFiles = ['index.html', 'config.js', 'assets/site.css', 'assets/site.js', 'content/project.json'];
+const requiredFiles = ['index.html', 'config.js', 'assets/site.css', 'assets/site.js', 'content/project.json', 'help/index.html'];
 for (const relative of requiredFiles) {
   try {
     await readFile(path.join(root, relative));

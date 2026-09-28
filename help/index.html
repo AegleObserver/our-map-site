@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#102b35" />
-    <meta name="description" content="15 分钟生活圈 · 本机运行帮助文档：准备工作、具体操作与运行网站。" />
+    <meta name="description" content="15 分钟生活圈 · 使用说明、环境依赖与测试数据。" />
     <title>帮助文档 | 15 分钟生活圈</title>
     <link rel="stylesheet" href="../assets/site.css" />
   </head>
@@ -16,10 +16,10 @@
           <span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span>
           <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
         </a>
-        <nav id="site-nav" class="site-nav" aria-label="帮助文档导航">
-          <a href="../#capabilities">能做什么</a>
-          <a href="../#method">怎么实现</a>
-          <a href="../#trust">结果边界</a>
+        <nav class="site-nav" aria-label="帮助文档导航">
+          <a href="#usage">使用说明</a>
+          <a href="#requirements">环境依赖</a>
+          <a href="#testdata">测试数据</a>
           <a href="../">返回首页</a>
         </nav>
       </div>
@@ -29,77 +29,136 @@
       <div class="shell">
         <div class="doc-heading">
           <p class="eyebrow">HELP / 帮助文档</p>
-          <h1>本机运行指南</h1>
-          <p>从准备环境到在浏览器中打开分析工作台，按以下步骤依次操作即可。</p>
+          <h1>使用说明与资源</h1>
+          <p>本页汇总使用说明、运行所需的环境依赖，以及用于体验的测试数据。</p>
         </div>
 
-        <section id="preparation" class="doc-section">
-          <h2><span class="doc-index">01</span>准备工作</h2>
-          <div class="doc-card">
-            <h3>设备与系统要求</h3>
-            <ul>
-              <li><strong>操作系统：</strong>Windows 10/11、macOS 12+ 或主流 Linux 发行版（64 位）。</li>
-              <li><strong>内存：</strong>建议 8 GB 及以上，路网分析与报告生成需要一定内存开销。</li>
-              <li><strong>磁盘空间：</strong>至少预留 2 GB，用于安装包、OSM 路网数据与构建产物。</li>
-              <li><strong>浏览器：</strong>Chrome / Edge / Firefox 近两年内的稳定版本。</li>
-            </ul>
-          </div>
-          <div class="doc-card">
-            <h3>必需软件</h3>
-            <ul>
-              <li><strong>Node.js：</strong>18 或更高版本（含 npm）。</li>
-              <li><strong>Python：</strong>3.10 或更高版本，用于启动后端服务。</li>
-              <li><strong>Git：</strong>用于克隆源码仓库（可选，也可直接下载压缩包）。</li>
-            </ul>
-          </div>
-        </section>
+        <nav class="doc-toc" aria-label="页内目录">
+          <a href="#usage">使用说明</a>
+          <a href="#requirements">环境依赖</a>
+          <a href="#testdata">测试数据</a>
+          <a href="#faq">常见问题</a>
+        </nav>
 
-        <section id="setup" class="doc-section">
-          <h2><span class="doc-index">02</span>具体操作</h2>
+        <section id="usage" class="doc-section">
+          <h2><span class="doc-index">01</span>使用说明</h2>
           <div class="doc-card">
-            <h3>下载安装包</h3>
-            <p>从 <a href="https://github.com/PennEwan/Baidu-map">GitHub 源码仓库</a> 克隆或下载最新版本：</p>
-            <pre><code>git clone https://github.com/PennEwan/Baidu-map.git
-cd Baidu-map</code></pre>
+            <h3>这个工具能做什么</h3>
+            <ul>
+              <li><strong>查看步行生活圈：</strong>从中心点出发，基于真实步行路网展示 15 分钟可达范围。</li>
+              <li><strong>核对民生设施：</strong>按类别查看菜市场、药店、小学等设施位置及是否在范围内。</li>
+              <li><strong>生成体检报告：</strong>汇总条件、结果、未知部分、来源与限制，便于复核。</li>
+            </ul>
+            <p class="doc-tip">单个中心点的结果不能代表整个社区；设施数量不代表容量、质量或营业状态。</p>
           </div>
           <div class="doc-card">
-            <h3>申请百度 API 并配置 AK</h3>
+            <h3>开始使用</h3>
             <ol>
-              <li>登录百度地图开放平台，创建「浏览器端」应用，获取 API Key（AK）。</li>
-              <li>将 AK 配置到本地环境变量中，供后端读取：</li>
+              <li><strong>选择分析位置：</strong>使用预设样例、地图选点，或手动输入经纬度（WGS84，纬度在前）。</li>
+              <li><strong>查看步行生活圈：</strong>查看 15 分钟范围、已知可达区域、未知区域与计算质量。</li>
+              <li><strong>核对民生设施：</strong>筛选类别，查看名称、位置、圈内状态及来源证据。</li>
+              <li><strong>生成体检报告：</strong>导出包含条件、结果、缺口与限制的完整报告。</li>
             </ol>
-            <pre><code># Windows (PowerShell)
-setx BAIDU_MAP_AK "你的百度AK"
-
-# macOS / Linux
-export BAIDU_MAP_AK="你的百度AK"</code></pre>
-            <p class="doc-tip">环境变量配置后需要重新打开终端或重启 IDE 才会生效。</p>
           </div>
           <div class="doc-card">
-            <h3>下载 OSM 路网数据</h3>
-            <p>从 OpenStreetMap 获取目标区域的路网数据，放入项目数据目录：</p>
-            <pre><code># 示例：通过 overpass-api 下载某区域路网并保存
-curl -o data/roads.osm "https://overpass-api.de/api/interpreter?data=[out:json];way[highway]({{bbox}});out;"
-# 或直接使用项目文档中提供的预处理数据</code></pre>
+            <h3>如何理解结果</h3>
+            <ul>
+              <li><strong>两套独立指标：</strong>15 分钟圈基于步行路网回答「能走到哪里」；1 公里判断基于直线距离回答「周边是否存在某类设施」。</li>
+              <li><strong>未知区域：</strong>数据不足、预算停止或服务异常时会保留为「未知」，不会被静默标记为不可达。</li>
+              <li><strong>可信度边界：</strong>Demo 为模拟数据，单点分析不等于全社区评价。</li>
+            </ul>
           </div>
         </section>
 
-        <section id="run" class="doc-section">
-          <h2><span class="doc-index">03</span>运行网站</h2>
+        <section id="requirements" class="doc-section">
+          <h2><span class="doc-index">02</span>环境依赖</h2>
           <div class="doc-card">
-            <h3>启动后端</h3>
-            <pre><code>pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000</code></pre>
+            <h3>基础软件</h3>
+            <ul>
+              <li><strong>Node.js：</strong>20 或更高版本（发布站与前端）。</li>
+              <li><strong>Python：</strong>3.10 或更高版本（分析后端）。</li>
+              <li><strong>浏览器：</strong>Chrome / Edge / Firefox 近两年稳定版。</li>
+            </ul>
           </div>
           <div class="doc-card">
-            <h3>启动前端</h3>
-            <pre><code>npm install
-npm run dev</code></pre>
+            <h3>requirements.txt</h3>
+            <p>分析后端的 Python 依赖，可下载后安装：<a href="./requirements.txt" download>下载 requirements.txt</a></p>
+            <pre><code>fastapi&gt;=0.110
+uvicorn[standard]&gt;=0.27
+pydantic&gt;=2.6
+httpx&gt;=0.27
+python-dotenv&gt;=1.0
+shapely&gt;=2.0
+geopandas&gt;=0.14
+networkx&gt;=3.2
+osmnx&gt;=1.9</code></pre>
+            <pre><code>pip install -r requirements.txt</code></pre>
           </div>
           <div class="doc-card">
-            <h3>在浏览器中打开</h3>
-            <p>启动成功后，在浏览器中访问 <code>http://localhost:5173</code>（或终端提示的本地地址），即可进入分析工作台。</p>
-            <p class="doc-tip">前端开发服务器会代理后端请求，确认后端已在 <code>:8000</code> 端口运行即可。</p>
+            <h3>环境变量</h3>
+            <p>百度地图 API Key 通过环境变量注入，不要写入源码：</p>
+            <pre><code># Windows CMD
+set BAIDU_MAP_AK=你的百度AK
+
+# Windows PowerShell
+$env:BAIDU_MAP_AK="你的百度AK"
+
+# macOS / Linux (bash/zsh)
+export BAIDU_MAP_AK="你的百度AK"</code></pre>
+            <h3>永久配置</h3>
+            <p><strong>Windows：</strong>右键「此电脑」→ 属性 → 高级系统设置 → 环境变量 → 新建系统变量，变量名 <code>BAIDU_MAP_AK</code>，变量值填入你的 AK。</p>
+            <p><strong>macOS：</strong>编辑 <code>~/.zshrc</code>（或 <code>~/.bash_profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.zshrc</code>。</p>
+            <p><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</p>
+          </div>
+        </section>
+
+        <section id="testdata" class="doc-section">
+          <h2><span class="doc-index">03</span>测试数据</h2>
+          <div class="doc-card">
+            <h3>数据说明</h3>
+            <p>Demo 使用固定模拟数据，用于验证「选点 → 构圈 → 设施核对 → 报告」流程的一致性，<strong>不代表真实社区结论</strong>。</p>
+            <ul>
+              <li><strong>中心点：</strong>一个经纬度坐标（WGS84）。</li>
+              <li><strong>设施：</strong>菜市场、药店、小学，含坐标、是否在圈内与来源标记。</li>
+              <li><strong>质量状态：</strong>完整 / 部分 / 预算停止 / 服务异常。</li>
+            </ul>
+            <p><a href="./sample-data.json" download>下载示例测试数据（sample-data.json）</a></p>
+            <pre><code>{
+  "center": { "name": "分析中心点", "lat": 31.2304, "lng": 121.4737 },
+  "walkableMinutes": 15,
+  "serviceDistanceKm": 1,
+  "facilityCategories": ["菜市场", "药店", "小学"],
+  "facilities": [
+    { "name": "青禾菜市场", "category": "菜市场", "inWalkableArea": true },
+    { "name": "便民药店", "category": "药店", "inWalkableArea": true },
+    { "name": "青禾小学", "category": "小学", "inWalkableArea": false }
+  ],
+  "unknownDirections": ["西南"],
+  "quality": "partial",
+  "disclaimer": "固定模拟数据，不代表真实社区结论。"
+}</code></pre>
+          </div>
+        </section>
+
+        <section id="faq" class="doc-section">
+          <h2><span class="doc-index">04</span>常见问题</h2>
+          <div class="guide-grid">
+            <details class="guide-item">
+              <summary>为什么有些按钮点了没反应？</summary>
+              <p>对应的外部入口尚未配置，页面会显示「待配置」。请联系项目维护者或参考部署说明完成配置。</p>
+            </details>
+            <details class="guide-item">
+              <summary>为什么地图上有些地方是空的？</summary>
+              <p>这些是未知区域，表示该方向缺少足够数据，并不代表不可达。</p>
+            </details>
+            <details class="guide-item">
+              <summary>可以用手机操作吗？</summary>
+              <p>介绍页可以手机浏览，但完整分析建议在桌面浏览器中进行，以获得更好的地图交互体验。</p>
+            </details>
+            <details class="guide-item">
+              <summary>15 分钟圈与 1 公里判断有什么区别？</summary>
+              <p>前者基于步行路网回答「能走到哪里」，后者基于直线距离回答「周边是否存在某类设施」，两者独立计算，不可相互替代。</p>
+            </details>
           </div>
         </section>
       </div>

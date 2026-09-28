@@ -27,5 +27,7 @@ await cp(path.join(root, 'index.html'), path.join(dist, 'index.html'));
 await cp(path.join(root, 'config.js'), path.join(dist, 'config.js'));
 await cp(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true });
 await cp(path.join(root, 'content'), path.join(dist, 'content'), { recursive: true });
+await cp(path.join(root, 'help'), path.join(dist, 'help'), { recursive: true });
+await cp(path.join(root, 'figure'), path.join(dist, 'figure'), { recursive: true });
 await writeFile(path.join(dist, 'config.js'), `window.SITE_CONFIG = ${JSON.stringify(config, null, 2)};\n`, 'utf8');
 console.log(`Built static site in ${path.relative(root, dist)}`);

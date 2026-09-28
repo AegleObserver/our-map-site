@@ -1,0 +1,9 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.6
+httpx>=0.27
+python-dotenv>=1.0
+shapely>=2.0
+geopandas>=0.14
+networkx>=3.2
+osmnx>=1.9
