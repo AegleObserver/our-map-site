@@ -69,6 +69,7 @@
     const navLabels = sideNav.querySelectorAll('.side-nav-labels li');
     const navHeight = sideNav.offsetHeight;
     const pathLength = progress.getTotalLength();
+    const scaleY = navHeight / 600;
     progress.style.strokeDasharray = pathLength;
     progress.style.strokeDashoffset = pathLength;
 
@@ -80,17 +81,15 @@
       { el: document.getElementById('screenshots'), label: navLabels[2] },
       { el: document.getElementById('method'), label: navLabels[3] },
       { el: document.getElementById('trust'), label: navLabels[4] },
-      { el: document.getElementById('roadmap'), label: navLabels[5] }
+      { el: document.getElementById('roadmap'), label: navLabels[5] },
+      { el: document.getElementById('resources'), label: navLabels[6] },
+      { el: document.getElementById('guides'), label: navLabels[7] }
     ];
 
     function updateMarker(ratio) {
       const clamped = Math.max(0, Math.min(1, ratio));
       const point = progress.getPointAtLength(clamped * pathLength);
-      const svgEl = progress.ownerSVGElement;
-      const svgRect = svgEl.getBoundingClientRect();
-      const scaleX = svgRect.width / 40;
-      const scaleY = svgRect.height / 600;
-      const x = (point.x * scaleX) - 17;
+      const x = point.x - 17;
       const y = (point.y * scaleY) - 17;
       marker.style.left = x + 'px';
       marker.style.top = y + 'px';
@@ -105,10 +104,21 @@
       sectionMap.forEach((s, i) => s.label.classList.toggle('active', i === activeIdx));
     }
 
-    function scrollToRatio(ratio) {
+    function scrollToRatio(ratio, instant) {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const target = Math.max(0, Math.min(1, ratio)) * maxScroll;
-      window.scrollTo({ top: target });
+      window.scrollTo({ top: target, behavior: instant ? 'instant' : 'smooth' });
+    }
+
+    function lengthRatioFromTargetY(targetY) {
+      let lo = 0;
+      let hi = pathLength;
+      for (let i = 0; i < 24; i++) {
+        const mid = (lo + hi) / 2;
+        if (progress.getPointAtLength(mid).y < targetY) lo = mid;
+        else hi = mid;
+      }
+      return ((lo + hi) / 2) / pathLength;
     }
 
     marker.addEventListener('pointerdown', (e) => {
@@ -120,9 +130,9 @@
     marker.addEventListener('pointermove', (e) => {
       if (!isDragging) return;
       const rect = sideNav.getBoundingClientRect();
-      const ratio = (e.clientY - rect.top) / navHeight;
-      updateMarker(ratio);
-      scrollToRatio(ratio);
+      const yRatio = Math.max(0, Math.min(1, (e.clientY - rect.top) / navHeight));
+      updateMarker(lengthRatioFromTargetY(yRatio * 600));
+      scrollToRatio(yRatio, true);
     });
 
     marker.addEventListener('pointerup', () => {
@@ -142,10 +152,16 @@
       });
     });
 
+    let scrollRaf = null;
     window.addEventListener('scroll', () => {
       if (isDragging) return;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      updateMarker(maxScroll > 0 ? window.scrollY / maxScroll : 0);
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = null;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+        updateMarker(lengthRatioFromTargetY(ratio * 600));
+      });
     }, { passive: true });
 
     updateMarker(0);

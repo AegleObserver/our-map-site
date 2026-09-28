@@ -27,6 +27,8 @@
         <li data-target="method">方法</li>
         <li data-target="trust">边界</li>
         <li data-target="roadmap">路线</li>
+        <li data-target="resources">链接</li>
+        <li data-target="guides">指南</li>
       </ol>
     </nav>
     <header class="site-header">
@@ -199,6 +201,72 @@
           <div id="demo-status" class="launch-panel reveal">
             <div><span class="launch-kicker">START HERE / 从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">在线 Demo 地址尚未配置。你可以先在 Demo 仓库本地启动，完整走一遍“选点 → 体检 → 报告”流程。</p></div>
             <div class="launch-actions"><a class="button button-light" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="repositoryUrl" href="#demo-status">查看源代码 <span aria-hidden="true">↗</span></a></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources" class="section section-light">
+        <div class="shell">
+          <div class="section-heading compact reveal">
+            <p class="eyebrow">LINKS / 项目链接</p>
+            <h2>相关项目与资源</h2>
+          </div>
+          <div class="resource-grid reveal">
+            <a class="resource-card" data-config-link="repositoryUrl" href="#resources">
+              <span class="resource-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              </span>
+              <span class="resource-name">GitHub 源码仓库</span>
+              <span class="resource-desc">完整代码、Issues 与 Releases</span>
+            </a>
+            <a class="resource-card" data-config-link="demoUrl" href="#resources">
+              <span class="resource-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              </span>
+              <span class="resource-name">在线 Demo</span>
+              <span class="resource-desc">固定模拟数据，完整走一遍流程</span>
+            </a>
+            <a class="resource-card" data-config-link="appUrl" href="#resources">
+              <span class="resource-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </span>
+              <span class="resource-name">正式工作台</span>
+              <span class="resource-desc">独立后端、鉴权与限流</span>
+            </a>
+            <a class="resource-card" data-config-link="releasesUrl" href="#resources">
+              <span class="resource-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </span>
+              <span class="resource-name">版本与下载</span>
+              <span class="resource-desc">历史版本与变更记录</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="guides" class="section section-paper">
+        <div class="shell">
+          <div class="section-heading compact reveal">
+            <p class="eyebrow">GUIDES / 操作指南</p>
+            <h2>快速上手与常见问题</h2>
+          </div>
+          <div class="guide-grid reveal">
+            <details class="guide-item">
+              <summary>如何本地启动 Demo？</summary>
+              <p>克隆仓库后，在项目根目录执行 <code>npm install</code> 与 <code>npm run dev</code>，然后在浏览器中打开提示的本地地址即可。</p>
+            </details>
+            <details class="guide-item">
+              <summary>如何输入自定义坐标？</summary>
+              <p>在 Demo 的选点面板中切换为「手动输入」，填写经纬度后确认。坐标系为 WGS84，注意顺序为纬度在前。</p>
+            </details>
+            <details class="guide-item">
+              <summary>报告中的「未知区域」是什么？</summary>
+              <p>表示该方向数据不足、预算停止或服务异常，系统不会将其静默标记为不可达。可在报告的结果说明中查看详情。</p>
+            </details>
+            <details class="guide-item">
+              <summary>15 分钟圈与 1 公里判断有什么区别？</summary>
+              <p>前者基于步行路网回答「能走到哪里」，后者基于直线距离回答「周边是否存在某类设施」。两者独立计算，不可相互替代。</p>
+            </details>
           </div>
         </div>
       </section>
