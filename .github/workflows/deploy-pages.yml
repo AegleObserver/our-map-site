@@ -34,8 +34,8 @@ jobs:
         env:
           PUBLIC_DEMO_URL: ${{ vars.PUBLIC_DEMO_URL || 'https://aegleobserver.github.io/our-map-demo/' }}
           PUBLIC_APP_URL: ${{ vars.PUBLIC_APP_URL }}
-          PUBLIC_REPOSITORY_URL: https://github.com/${{ github.repository }}
-          PUBLIC_RELEASES_URL: https://github.com/${{ github.repository }}/releases
+          PUBLIC_REPOSITORY_URL: https://github.com/PennEwan/Baidu-map
+          PUBLIC_RELEASES_URL: https://github.com/PennEwan/Baidu-map
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
