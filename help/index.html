@@ -4,9 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#102b35" />
-    <meta name="description" content="15 分钟生活圈 · 使用说明、环境依赖与测试数据。" />
+    <meta name="description" content="15 分钟生活圈 · 帮助文档：使用说明与架构说明。" />
     <title>帮助文档 | 15 分钟生活圈</title>
     <link rel="stylesheet" href="../assets/site.css" />
+    <style>
+      .help-layout { display: grid; grid-template-columns: 240px 1fr; gap: 48px; align-items: start; }
+      .help-sidebar { position: sticky; top: 100px; padding-top: 70px; }
+      .help-sidebar-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+      .help-sidebar-brand .brand-mark { width: 32px; height: 32px; font-size: 11px; }
+      .help-sidebar-brand .brand-copy strong { font-size: 15px; }
+      .help-sidebar-brand .brand-copy small { font-size: 7px; }
+      .help-nav-label { margin: 0 0 12px; color: var(--ink-soft); font-size: 10px; font-weight: 700; letter-spacing: .12em; }
+      .help-nav { display: flex; flex-direction: column; gap: 2px; }
+      .help-nav a { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; color: var(--ink-soft); font-size: 13px; font-weight: 500; transition: background .15s ease, color .15s ease; }
+      .help-nav a:hover { background: var(--teal-pale); color: var(--ink); }
+      .help-nav a.active { background: var(--teal-pale); color: var(--teal); font-weight: 600; }
+      .help-nav a .nav-icon { width: 16px; height: 16px; flex-shrink: 0; }
+      .help-content { padding-top: 70px; min-width: 0; }
+      .help-content h1 { margin-bottom: 8px; font-size: 28px; letter-spacing: -.05em; }
+      .help-content h2 { margin: 36px 0 14px; font-size: 19px; letter-spacing: -.03em; }
+      .help-content h3 { margin: 24px 0 10px; font-size: 15px; }
+      .help-content p { margin-bottom: 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
+      .help-content ul, .help-content ol { margin: 0 0 14px; padding-left: 22px; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
+      .help-content li { margin-bottom: 6px; }
+      .help-content strong { color: var(--ink); }
+      .help-content a { color: var(--teal); }
+      .help-content pre { margin: 14px 0; padding: 16px 18px; overflow-x: auto; border-radius: 6px; background: var(--ink); color: #d8eee4; font-size: 13px; line-height: 1.65; }
+      .help-content code { padding: 2px 6px; border-radius: 3px; background: var(--teal-pale); color: var(--teal); font-size: 12px; }
+      .help-content pre code { padding: 0; background: none; color: inherit; font-size: 13px; }
+      .help-content table { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: 13px; }
+      .help-content th, .help-content td { padding: 10px 12px; border: 1px solid var(--line); text-align: left; }
+      .help-content th { background: var(--teal-pale); font-weight: 600; }
+      .help-content blockquote { margin: 14px 0; padding: 12px 16px; border-left: 3px solid var(--teal); background: var(--teal-pale); border-radius: 0 4px 4px 0; }
+      .help-content blockquote p { margin: 0; font-size: 13px; }
+      .help-toc { margin: 24px 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--cream); }
+      .help-toc-title { margin-bottom: 10px; font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+      .help-toc a { display: block; padding: 4px 0; color: var(--teal); font-size: 13px; }
+      .help-toc a:hover { text-decoration: underline; }
+      .doc-page { display: none; }
+      .doc-page.active { display: block; }
+      .help-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; color: var(--ink-soft); font-size: 12px; }
+      .help-back:hover { color: var(--teal); }
+      @media (max-width: 900px) {
+        .help-layout { grid-template-columns: 1fr; }
+        .help-sidebar { position: static; padding-top: 0; margin-bottom: 30px; }
+        .help-content { padding-top: 0; }
+      }
+    </style>
   </head>
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
@@ -17,9 +61,8 @@
           <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
         </a>
         <nav class="site-nav" aria-label="帮助文档导航">
-          <a href="#usage">使用说明</a>
-          <a href="#requirements">环境依赖</a>
-          <a href="#testdata">测试数据</a>
+          <a href="#usage" data-nav="usage">使用说明</a>
+          <a href="#architecture" data-nav="architecture">架构说明</a>
           <a href="../">返回首页</a>
         </nav>
       </div>
@@ -27,95 +70,109 @@
 
     <main id="main-content" class="doc-main">
       <div class="shell">
-        <div class="doc-heading">
-          <p class="eyebrow">HELP / 帮助文档</p>
-          <h1>使用说明与资源</h1>
-          <p>本页汇总使用说明、运行所需的环境依赖，以及用于体验的测试数据。</p>
-        </div>
+        <div class="help-layout">
+          <aside class="help-sidebar">
+            <div class="help-sidebar-brand">
+              <a class="brand" href="../" aria-label="15 分钟生活圈首页">
+                <span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span>
+                <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
+              </a>
+            </div>
+            <p class="help-nav-label">文档</p>
+            <nav class="help-nav" aria-label="文档导航">
+              <a href="#usage" data-nav="usage" class="active">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                使用说明
+              </a>
+              <a href="#architecture" data-nav="architecture">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                架构说明
+              </a>
+            </nav>
+          </aside>
 
-        <nav class="doc-toc" aria-label="页内目录">
-          <a href="#usage">使用说明</a>
-          <a href="#requirements">环境依赖</a>
-          <a href="#testdata">测试数据</a>
-          <a href="#faq">常见问题</a>
-        </nav>
+          <div class="help-content">
+            <a class="help-back" href="../">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              返回首页
+            </a>
 
-        <section id="usage" class="doc-section">
-          <h2><span class="doc-index">01</span>使用说明</h2>
-          <div class="doc-card">
-            <h3>这个工具能做什么</h3>
-            <ul>
-              <li><strong>查看步行生活圈：</strong>从中心点出发，基于真实步行路网展示 15 分钟可达范围。</li>
-              <li><strong>核对民生设施：</strong>按类别查看菜市场、药店、小学等设施位置及是否在范围内。</li>
-              <li><strong>生成体检报告：</strong>汇总条件、结果、未知部分、来源与限制，便于复核。</li>
-            </ul>
-            <p class="doc-tip">单个中心点的结果不能代表整个社区；设施数量不代表容量、质量或营业状态。</p>
-          </div>
-          <div class="doc-card">
-            <h3>开始使用</h3>
-            <ol>
-              <li><strong>选择分析位置：</strong>使用预设样例、地图选点，或手动输入经纬度（WGS84，纬度在前）。</li>
-              <li><strong>查看步行生活圈：</strong>查看 15 分钟范围、已知可达区域、未知区域与计算质量。</li>
-              <li><strong>核对民生设施：</strong>筛选类别，查看名称、位置、圈内状态及来源证据。</li>
-              <li><strong>生成体检报告：</strong>导出包含条件、结果、缺口与限制的完整报告。</li>
-            </ol>
-          </div>
-          <div class="doc-card">
-            <h3>如何理解结果</h3>
-            <ul>
-              <li><strong>两套独立指标：</strong>15 分钟圈基于步行路网回答「能走到哪里」；1 公里判断基于直线距离回答「周边是否存在某类设施」。</li>
-              <li><strong>未知区域：</strong>数据不足、预算停止或服务异常时会保留为「未知」，不会被静默标记为不可达。</li>
-              <li><strong>可信度边界：</strong>Demo 为模拟数据，单点分析不等于全社区评价。</li>
-            </ul>
-          </div>
-        </section>
+            <div id="page-usage" class="doc-page active">
+              <h1>使用说明</h1>
+              <div class="help-toc">
+                <p class="help-toc-title">本页目录</p>
+                <a href="#u-overview">概述</a>
+                <a href="#u-requirements">环境要求</a>
+                <a href="#u-start">开始使用</a>
+                <a href="#u-workflow">操作流程</a>
+                <a href="#u-understand">如何理解结果</a>
+                <a href="#u-faq">常见问题</a>
+              </div>
 
-        <section id="requirements" class="doc-section">
-          <h2><span class="doc-index">02</span>环境依赖</h2>
-          <div class="doc-card">
-            <h3>基础软件</h3>
-            <ul>
-              <li><strong>Node.js：</strong>20 或更高版本（发布站与前端）。</li>
-              <li><strong>Python：</strong>3.10 或更高版本（分析后端）。</li>
-              <li><strong>浏览器：</strong>Chrome / Edge / Firefox 近两年稳定版。</li>
-            </ul>
-          </div>
-          <div class="doc-card">
-            <h3>申请百度地图 AK</h3>
-            <p>访问百度地图开放平台：<a href="https://lbsyun.baidu.com/" target="_blank" rel="noreferrer">https://lbsyun.baidu.com/</a></p>
-            <ol>
-              <li>使用百度账号登录，完成开发者认证（个人或企业）。</li>
-              <li>进入「控制台」→「应用管理」→「我的应用」，点击「创建应用」。</li>
-              <li>填写应用信息：
-                <ul>
-                  <li><strong>应用名称：</strong>自定义，如「15分钟生活圈」。</li>
-                  <li><strong>应用类型：</strong>选择「浏览器端」。</li>
-                  <li><strong>启用服务：</strong>勾选「浏览器端AK」及所需的 Web 服务 API。</li>
-                  <li><strong>安全配置（白名单）：</strong>填写允许访问的域名或 IP，开发阶段可填 <code>*</code> 表示不限制。</li>
-                </ul>
-              </li>
-              <li>创建完成后，在「我的应用」列表中可以查看并复制 AK。</li>
-            </ol>
-            <p class="doc-tip">AK 相当于账号凭证，请勿提交到公开仓库或分享给他人。如怀疑泄露，请在控制台重置。</p>
-          </div>
-          <div class="doc-card">
-            <h3>requirements.txt</h3>
-            <p>分析后端的 Python 依赖，可下载后安装：<a href="./requirements.txt" download>下载 requirements.txt</a></p>
-            <pre><code>fastapi&gt;=0.110
-uvicorn[standard]&gt;=0.27
-pydantic&gt;=2.6
-httpx&gt;=0.27
-python-dotenv&gt;=1.0
-shapely&gt;=2.0
-geopandas&gt;=0.14
-networkx&gt;=3.2
-osmnx&gt;=1.9</code></pre>
-            <pre><code>pip install -r requirements.txt</code></pre>
-          </div>
-          <div class="doc-card">
-            <h3>准备 OSM 路网数据</h3>
-            <p>使用 OSM 方案前，需要先在本地下载目标区域的路网数据。推荐使用 OSMnx 自动下载：</p>
-            <pre><code>import osmnx as ox
+              <h2 id="u-overview">概述</h2>
+              <p>「15 分钟生活圈」帮助你从任意一个中心点出发，理解步行可达范围、周边民生设施分布以及可能存在的服务缺口。本文档面向使用者，介绍如何上手、各功能入口和使用时需要注意的事项。</p>
+              <p>发布站本身是纯静态页面，不依赖后端即可独立访问；完整分析功能需要另行启动后端与前端服务。</p>
+
+              <h2 id="u-requirements">环境要求</h2>
+              <table>
+                <thead><tr><th>项目</th><th>要求</th></tr></thead>
+                <tbody>
+                  <tr><td>操作系统</td><td>Windows 10/11、macOS 12+、主流 64 位 Linux</td></tr>
+                  <tr><td>Node.js</td><td>20 或更高版本（发布站与前端）</td></tr>
+                  <tr><td>Python</td><td>3.10 或更高版本（分析后端）</td></tr>
+                  <tr><td>浏览器</td><td>Chrome / Edge / Firefox 近两年稳定版</td></tr>
+                  <tr><td>磁盘空间</td><td>发布站约 50 MB；完整分析工具建议预留 2 GB</td></tr>
+                  <tr><td>内存</td><td>建议 8 GB 及以上（分析工具）</td></tr>
+                </tbody>
+              </table>
+              <p>运行完整分析工具时还需要：</p>
+              <ul>
+                <li>Python 3.10 或更高版本</li>
+                <li>Git（可选，用于克隆源码）</li>
+                <li>百度地图开放平台账号（申请 API Key）</li>
+              </ul>
+
+              <h2 id="u-start">开始使用</h2>
+              <h3>方式一：在线 Demo（推荐新用户）</h3>
+              <ol>
+                <li>打开首页，点击「打开 Demo」进入演示环境。</li>
+                <li>Demo 使用固定模拟数据，用于快速体验完整流程，<strong>不代表真实社区结论</strong>。</li>
+              </ol>
+              <h3>方式二：本地运行完整分析</h3>
+              <p><strong>1. 申请百度地图 API</strong></p>
+              <p>访问百度地图开放平台：<a href="https://lbsyun.baidu.com/" target="_blank" rel="noreferrer">https://lbsyun.baidu.com/</a></p>
+              <ol>
+                <li>使用百度账号登录，完成开发者认证（个人或企业）。</li>
+                <li>进入「控制台」→「应用管理」→「我的应用」，点击「创建应用」。</li>
+                <li>填写应用信息：
+                  <ul>
+                    <li><strong>应用名称：</strong>自定义，如「15分钟生活圈」。</li>
+                    <li><strong>应用类型：</strong>选择「浏览器端」。</li>
+                    <li><strong>启用服务：</strong>勾选「浏览器端AK」及所需的 Web 服务 API。</li>
+                    <li><strong>安全配置（白名单）：</strong>填写允许访问的域名或 IP，开发阶段可填 <code>*</code> 表示不限制。</li>
+                  </ul>
+                </li>
+                <li>创建完成后，在「我的应用」列表中可以查看并复制 AK。</li>
+              </ol>
+              <blockquote><p>AK 相当于账号凭证，请勿提交到公开仓库或分享给他人。如怀疑泄露，请在控制台重置。</p></blockquote>
+              <p><strong>2. 配置环境变量</strong></p>
+              <pre><code># Windows CMD
+set BAIDU_MAP_AK=你的百度AK
+
+# Windows PowerShell
+$env:BAIDU_MAP_AK="你的百度AK"
+
+# macOS / Linux (bash/zsh)
+export BAIDU_MAP_AK="你的百度AK"</code></pre>
+              <p>以上命令仅在当前终端会话有效。如需永久配置：</p>
+              <ul>
+                <li><strong>Windows：</strong>右键「此电脑」→ 属性 → 高级系统设置 → 环境变量 → 新建系统变量，变量名 <code>BAIDU_MAP_AK</code>，变量值填入你的 AK。</li>
+                <li><strong>macOS：</strong>编辑 <code>~/.zshrc</code>（或 <code>~/.bash_profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.zshrc</code>。</li>
+                <li><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</li>
+              </ul>
+              <p><strong>3. 准备 OSM 路网数据</strong></p>
+              <p>使用 OSM 方案前，需要先在本地下载目标区域的路网数据。推荐使用 OSMnx 自动下载：</p>
+              <pre><code>import osmnx as ox
 
 # 按城市名称下载
 graph = ox.graph_from_place("上海市青浦区", network_type="walk")
@@ -124,81 +181,232 @@ ox.save_graphml(graph, "data/roads.graphml")
 # 或按经纬度范围下载
 graph = ox.graph_from_bbox(31.25, 31.20, 121.50, 121.45, network_type="walk")
 ox.save_graphml(graph, "data/roads.graphml")</code></pre>
-            <p>也可以从 OpenStreetMap 官网或 Geofabrik 下载 <code>.osm</code> 或 <code>.pbf</code> 文件，放入 <code>data/</code> 目录。</p>
-            <p class="doc-tip">路网数据文件较大，建议只下载分析所需的区域，避免占用过多磁盘空间。</p>
-          </div>
-          <div class="doc-card">
-            <h3>环境变量</h3>
-            <p>百度地图 API Key 通过环境变量注入，不要写入源码：</p>
-            <pre><code># Windows CMD
-set BAIDU_MAP_AK=你的百度AK
+              <p>也可以从 OpenStreetMap 官网或 Geofabrik 下载 <code>.osm</code> 或 <code>.pbf</code> 文件，放入 <code>data/</code> 目录。</p>
+              <blockquote><p>路网数据文件较大，建议只下载分析所需的区域，避免占用过多磁盘空间。</p></blockquote>
+              <p><strong>4. 启动后端与前端</strong></p>
+              <pre><code># 后端
+pip install -r requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 
-# Windows PowerShell
-$env:BAIDU_MAP_AK="你的百度AK"
+# 前端
+npm install
+npm run dev</code></pre>
+              <p><strong>5. 在浏览器中打开</strong></p>
+              <p>访问终端提示的地址（通常为 <code>http://localhost:5173</code>），即可进入分析工作台。前端开发服务器会代理后端请求，确认后端已在 <code>:8000</code> 端口运行。</p>
 
-# macOS / Linux (bash/zsh)
-export BAIDU_MAP_AK="你的百度AK"</code></pre>
-            <h3>永久配置</h3>
-            <p><strong>Windows：</strong>右键「此电脑」→ 属性 → 高级系统设置 → 环境变量 → 新建系统变量，变量名 <code>BAIDU_MAP_AK</code>，变量值填入你的 AK。</p>
-            <p><strong>macOS：</strong>编辑 <code>~/.zshrc</code>（或 <code>~/.bash_profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.zshrc</code>。</p>
-            <p><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</p>
-          </div>
-        </section>
+              <h2 id="u-workflow">操作流程</h2>
+              <h3>第 1 步：选择分析位置</h3>
+              <p>使用预设样例、在地图上选点，或手动输入经纬度。请确认本次分析从哪个中心点开始。手动输入坐标时使用 WGS84 坐标系，注意顺序为纬度在前、经度在后。</p>
+              <h3>第 2 步：查看步行生活圈</h3>
+              <p>在地图上查看 15 分钟可达范围、已知可达区域、未知区域和计算质量。沿步行路网行进，绕行与硬约束都会被保留。</p>
+              <h3>第 3 步：核对民生设施</h3>
+              <p>按类别筛选菜市场、药店、小学等设施，查看名称、位置、是否在圈内以及来源证据。</p>
+              <h3>第 4 步：生成体检报告</h3>
+              <p>汇总条件、结果、服务缺口、未知部分、数据来源和限制说明，方便复核与分享。</p>
 
-        <section id="testdata" class="doc-section">
-          <h2><span class="doc-index">03</span>测试数据</h2>
-          <div class="doc-card">
-            <h3>数据说明</h3>
-            <p>Demo 使用固定模拟数据，用于验证「选点 → 构圈 → 设施核对 → 报告」流程的一致性，<strong>不代表真实社区结论</strong>。</p>
-            <ul>
-              <li><strong>中心点：</strong>一个经纬度坐标（WGS84）。</li>
-              <li><strong>设施：</strong>菜市场、药店、小学，含坐标、是否在圈内与来源标记。</li>
-              <li><strong>质量状态：</strong>完整 / 部分 / 预算停止 / 服务异常。</li>
-            </ul>
-            <p><a href="./sample-data.json" download>下载示例测试数据（sample-data.json）</a></p>
-            <pre><code>{
-  "center": { "name": "分析中心点", "lat": 31.2304, "lng": 121.4737 },
-  "walkableMinutes": 15,
-  "serviceDistanceKm": 1,
-  "facilityCategories": ["菜市场", "药店", "小学"],
-  "facilities": [
-    { "name": "青禾菜市场", "category": "菜市场", "inWalkableArea": true },
-    { "name": "便民药店", "category": "药店", "inWalkableArea": true },
-    { "name": "青禾小学", "category": "小学", "inWalkableArea": false }
-  ],
-  "unknownDirections": ["西南"],
-  "quality": "partial",
-  "disclaimer": "固定模拟数据，不代表真实社区结论。"
-}</code></pre>
-          </div>
-        </section>
+              <h2 id="u-understand">如何理解结果</h2>
+              <p><strong>15 分钟圈与 1 公里判断是两套独立指标</strong></p>
+              <ul>
+                <li>15 分钟圈：基于步行路网，回答「能走到哪里」。</li>
+                <li>1 公里判断：基于直线距离，回答「周边是否存在某类设施」。</li>
+              </ul>
+              <p>两者不会相互替代，请勿混用。</p>
+              <p><strong>「未知区域」是什么意思</strong></p>
+              <p>当某方向数据不足、计算预算停止或服务异常时，地图会保留为「未知」，而不会静默标记为不可达。详情可在报告的结果说明中查看。</p>
+              <p><strong>结果的可信度边界</strong></p>
+              <ul>
+                <li>Demo 是可操作的模拟数据演示，用于验证流程一致性，不代表真实结论。</li>
+                <li>数据不足、部分结果、预算停止和服务异常都会保留状态。</li>
+                <li>单点分析不等于全社区评价。</li>
+              </ul>
 
-        <section id="faq" class="doc-section">
-          <h2><span class="doc-index">04</span>常见问题</h2>
-          <div class="guide-grid">
-            <details class="guide-item">
-              <summary>为什么有些按钮点了没反应？</summary>
+              <h2 id="u-faq">常见问题</h2>
+              <h3>为什么有些按钮点了没反应？</h3>
               <p>对应的外部入口尚未配置，页面会显示「待配置」。请联系项目维护者或参考部署说明完成配置。</p>
-            </details>
-            <details class="guide-item">
-              <summary>为什么地图上有些地方是空的？</summary>
+              <h3>为什么地图上有些地方是空的？</h3>
               <p>这些是未知区域，表示该方向缺少足够数据，并不代表不可达。</p>
-            </details>
-            <details class="guide-item">
-              <summary>可以用手机操作吗？</summary>
+              <h3>可以用手机操作吗？</h3>
               <p>介绍页可以手机浏览，但完整分析建议在桌面浏览器中进行，以获得更好的地图交互体验。</p>
-            </details>
-            <details class="guide-item">
-              <summary>15 分钟圈与 1 公里判断有什么区别？</summary>
-              <p>前者基于步行路网回答「能走到哪里」，后者基于直线距离回答「周边是否存在某类设施」，两者独立计算，不可相互替代。</p>
-            </details>
+            </div>
+
+            <div id="page-architecture" class="doc-page">
+              <h1>项目架构说明</h1>
+              <div class="help-toc">
+                <p class="help-toc-title">本页目录</p>
+                <a href="#a-repo">仓库结构</a>
+                <a href="#a-runtime">运行时总览</a>
+                <a href="#a-api">三条入口</a>
+                <a href="#a-checkup">体检 v2 主路径</a>
+                <a href="#a-engines">成圈引擎</a>
+                <a href="#a-infra">共享基础设施</a>
+                <a href="#a-frontend">前端</a>
+                <a href="#a-boundary">数据与进程边界</a>
+                <a href="#a-changelog">改哪里</a>
+                <a href="#a-invariant">不变量</a>
+              </div>
+
+              <h2 id="a-repo">仓库结构</h2>
+              <pre><code>baidu-map/
+  life-circle-algorithm/   可安装的 Python 包 life_circle
+  backend/                 FastAPI 应用
+  life-circle-demo/        React 工作台
+  data/osm/                OSM 图缓存与边界
+  data/water-reviews/      水系复核
+  docs/                    项目级说明</code></pre>
+              <p>三者的依赖方向是固定的：</p>
+              <ul>
+                <li><code>life_circle</code> 不认识 HTTP、体检或前端，提供共享模型与工具。</li>
+                <li><code>backend</code> 以可编辑安装依赖这个包，再在 <code>app/</code> 里实现产品。</li>
+                <li>前端不装算法包，只通过 HTTP 契约说话。</li>
+              </ul>
+              <p>生产成圈<strong>不</strong>走历史自适应网格。线上百度边界搜索走 <code>backend/tools/endpoint_multicross_boundary.py</code>，由 <code>app/algorithms/baidu_e82.py</code> 适配成任务结果。</p>
+
+              <h2 id="a-runtime">运行时总览</h2>
+              <p>一个进程、一个 worker。任务管理器、限流门和内存中的旧任务都假设单进程；多 worker 会把配额和并发限制拆成多份。</p>
+              <p><code>app/main.py</code> 的 <code>create_app</code> 是唯一装配点：</p>
+              <ol>
+                <li><code>load_settings()</code> 读 <code>backend/.env</code>，进程环境变量优先。</li>
+                <li>建一个 <code>Quota</code>，方向门和地点门分开，全应用共用。</li>
+                <li>建 <code>AnalysisManager</code> 和 <code>HybridManager</code>，与体检共用方向门。</li>
+                <li>建 <code>LazyOsmOfflineEngine</code>，启动时不加载全市图，首次使用时惰性加载。</li>
+                <li><code>build_checkups</code> 打开体检库、注册两个引擎、注入 <code>Quota</code>。</li>
+                <li>开始对外服务时才 <code>interrupt_unfinished()</code>，把上次没跑完的体检标成中断，不重放已付费请求。</li>
+              </ol>
+
+              <h2 id="a-api">三条入口，三套契约</h2>
+              <p>请求点名算法。服务端不会在引擎失败时静默换另一套，也不会接受对方的请求体。</p>
+              <table>
+                <thead><tr><th>入口</th><th>谁在用</th><th>引擎</th></tr></thead>
+                <tbody>
+                  <tr><td><code>POST /api/v2/checkups</code></td><td>当前页面</td><td>baidu_e82 或 osm_hybrid</td></tr>
+                  <tr><td><code>POST /api/analyses</code></td><td>旧接口，页面已不走</td><td>E8.2 核心</td></tr>
+                  <tr><td><code>POST /api/v1/analysis/hybrid</code></td><td>旧接口</td><td>Hybrid v1.5</td></tr>
+                </tbody>
+              </table>
+              <p>错误信封也按路径分开。校验失败不回显原始输入、URL 或密钥。</p>
+
+              <h2 id="a-checkup">体检 v2：主路径</h2>
+              <p>编排在 <code>app/checkups/manager.py</code>。同一时刻只跑一个任务，第二个排队而不是 409。任务级截止约 1800 秒。</p>
+              <p>一次运行按阶段发布<strong>不可变修订</strong>。已付费的阶段结果在取消时仍然冻结，不丢弃。</p>
+              <table>
+                <thead><tr><th>阶段</th><th>做什么</th></tr></thead>
+                <tbody>
+                  <tr><td>成圈</td><td>调用引擎 compute-only 接缝，得到 IsochroneSnapshot</td></tr>
+                  <tr><td>设施</td><td>在冻结圈面上检索、分类、去重</td></tr>
+                  <tr><td>评估</td><td>用全市步行图做 1000 米服务场</td></tr>
+                  <tr><td>核验</td><td>120 次路线预算抽检</td></tr>
+                  <tr><td>报告</td><td>复述已冻结的评估与核验，不重算</td></tr>
+                </tbody>
+              </table>
+
+              <h2 id="a-engines">两套成圈引擎</h2>
+              <h3>百度边界搜索 baidu_e82</h3>
+              <ul>
+                <li>标识：<code>algorithm=local-multicross-e82</code>，默认档位 400。</li>
+                <li>调用链：<code>BaiduE82Engine.compute</code> → <code>tools/endpoint_multicross_boundary.py</code>。</li>
+                <li>证据来自百度实际返回的路线端点，不来自合成端点。</li>
+                <li>不需要 OSM 图才能成圈。质量不会高于 <code>partial</code>。</li>
+              </ul>
+              <h3>OSM＋百度 osm_hybrid</h3>
+              <ul>
+                <li>核心在 <code>app/algorithms/hybrid_isochrone/</code>，版本 v1.5。</li>
+                <li>档位 200 / 400，计算域默认投影平面上 ±1200 米正方形。</li>
+                <li>调用链：惰性加载全市图 → OsmGuidance 采样引导 → 百度步行核验 → 成面并扣除水体。</li>
+                <li>缺图、版本不符时就绪项标 <code>degraded</code> 并降低质量。</li>
+              </ul>
+
+              <h2 id="a-infra">共享基础设施</h2>
+              <h3>配额</h3>
+              <p>方向服务和地点服务各有门、各有日预算，日界是 Asia/Shanghai。账本在 <code>backend/.quota/quota.sqlite3</code>。</p>
+              <h3>坐标</h3>
+              <p>线上几何一律是 BD09LL，经度在前，<strong>不是</strong> WGS84 GeoJSON。米制计算用 <code>EPSG:32651</code>（上海）。</p>
+              <h3>设施目录与距离规则</h3>
+              <p>类别字典在 <code>app/categories.json</code>。距离规则在 <code>app/service_rules.py</code>。900 秒是成圈阈值；1000 米是设施服务标准。二者不是同一个数。</p>
+              <h3>缓存</h3>
+              <p>地点分页、路线和空间结果的跨任务复用由 <code>cache_freshness_seconds</code> 控制。未配置时缓存只在写入它的那个任务内复用。</p>
+
+              <h2 id="a-frontend">前端</h2>
+              <p>生产入口是 <code>src/main.tsx</code>。地址是 hash，不是 History API：<code>#/checkup/e82</code>、<code>#/checkup/hybrid</code>。</p>
+              <ul>
+                <li><code>client.ts</code> 只讲 <code>/api/v2</code>，每个响应先过校验。</li>
+                <li><code>controller.ts</code> 负责提交、轮询、按修订取图层、取消和恢复。</li>
+                <li><code>sessions.ts</code> 让控制器活在模块里，不活在组件里。</li>
+                <li><code>CheckupApp.tsx</code> 只排版，能选什么、数字怎么读、画成什么都是纯函数。</li>
+              </ul>
+
+              <h2 id="a-boundary">数据与进程边界</h2>
+              <table>
+                <thead><tr><th>路径</th><th>内容</th><th>重启后</th></tr></thead>
+                <tbody>
+                  <tr><td><code>backend/.checkups/</code></td><td>体检元数据和已发布修订</td><td>未完成任务标中断；已发布修订保留</td></tr>
+                  <tr><td><code>backend/.quota/</code></td><td>本应用日消耗</td><td>保留</td></tr>
+                  <tr><td><code>data/osm/</code></td><td>PBF、图缓存、障碍与风险</td><td>启动时不读；首次使用才加载</td></tr>
+                </tbody>
+              </table>
+              <p>部署约定：<code>--workers 1</code>。</p>
+
+              <h2 id="a-changelog">改哪里</h2>
+              <table>
+                <thead><tr><th>要改的事</th><th>先看</th></tr></thead>
+                <tbody>
+                  <tr><td>加或换成圈算法</td><td>实现 IsochroneEngine，在 build_registry 注册</td></tr>
+                  <tr><td>改 E8.2 采样</td><td>backend/tools/endpoint_multicross_boundary.py</td></tr>
+                  <tr><td>改 Hybrid</td><td>app/algorithms/hybrid_isochrone/</td></tr>
+                  <tr><td>改服务覆盖</td><td>app/accessibility/ + app/scoring.py</td></tr>
+                  <tr><td>改设施类别</td><td>app/categories.json</td></tr>
+                  <tr><td>改体检阶段</td><td>app/checkups/manager.py</td></tr>
+                  <tr><td>改配额</td><td>app/quota.py</td></tr>
+                  <tr><td>改页面</td><td>life-circle-demo/src/checkup/</td></tr>
+                </tbody>
+              </table>
+
+              <h2 id="a-invariant">不要打破的不变量</h2>
+              <ul>
+                <li>两套引擎不是彼此的降级，请求、档位、失败都不能改道。</li>
+                <li>三套 HTTP 契约不能混用字段。</li>
+                <li><code>displayGeometry</code> 只用于描边。</li>
+                <li>阶段未就绪用具名拒绝，不用空几何冒充「没有」。</li>
+                <li>检索失败、分页截断和零结果是三种状态。</li>
+                <li>圈外邻近设施不能计入圈内数量。</li>
+                <li>业务状态不以 <code>complete</code> 表示目录已核全。</li>
+                <li>全应用只有一对百度限流门。</li>
+                <li>日志和错误响应不记录 AK、完整 URL 或异常原文。</li>
+              </ul>
+            </div>
           </div>
-        </section>
+        </div>
       </div>
     </main>
 
     <footer class="site-footer">
       <div class="shell footer-bottom"><span>15 分钟生活圈 · 帮助文档</span><span>Demo 数据为模拟数据，不是真实社区结论。</span></div>
     </footer>
+
+    <script>
+      const navLinks = document.querySelectorAll('[data-nav]');
+      const pages = document.querySelectorAll('.doc-page');
+
+      function activate(name) {
+        navLinks.forEach(a => a.classList.toggle('active', a.dataset.nav === name));
+        pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + name));
+      }
+
+      navLinks.forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const name = a.dataset.nav;
+          activate(name);
+          history.replaceState(null, '', '#' + name);
+        });
+      });
+
+      const hash = location.hash.slice(1);
+      if (hash === 'architecture') activate('architecture');
+      else activate('usage');
+
+      document.querySelectorAll('.help-content h2[id], .help-content h3[id]').forEach(h => {
+        h.style.scrollMarginTop = '100px';
+      });
+    </script>
   </body>
 </html>
