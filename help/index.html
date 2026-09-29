@@ -81,6 +81,24 @@
             </ul>
           </div>
           <div class="doc-card">
+            <h3>申请百度地图 AK</h3>
+            <p>访问百度地图开放平台：<a href="https://lbsyun.baidu.com/" target="_blank" rel="noreferrer">https://lbsyun.baidu.com/</a></p>
+            <ol>
+              <li>使用百度账号登录，完成开发者认证（个人或企业）。</li>
+              <li>进入「控制台」→「应用管理」→「我的应用」，点击「创建应用」。</li>
+              <li>填写应用信息：
+                <ul>
+                  <li><strong>应用名称：</strong>自定义，如「15分钟生活圈」。</li>
+                  <li><strong>应用类型：</strong>选择「浏览器端」。</li>
+                  <li><strong>启用服务：</strong>勾选「浏览器端AK」及所需的 Web 服务 API。</li>
+                  <li><strong>安全配置（白名单）：</strong>填写允许访问的域名或 IP，开发阶段可填 <code>*</code> 表示不限制。</li>
+                </ul>
+              </li>
+              <li>创建完成后，在「我的应用」列表中可以查看并复制 AK。</li>
+            </ol>
+            <p class="doc-tip">AK 相当于账号凭证，请勿提交到公开仓库或分享给他人。如怀疑泄露，请在控制台重置。</p>
+          </div>
+          <div class="doc-card">
             <h3>requirements.txt</h3>
             <p>分析后端的 Python 依赖，可下载后安装：<a href="./requirements.txt" download>下载 requirements.txt</a></p>
             <pre><code>fastapi&gt;=0.110
