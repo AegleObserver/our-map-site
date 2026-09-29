@@ -113,6 +113,21 @@ osmnx&gt;=1.9</code></pre>
             <pre><code>pip install -r requirements.txt</code></pre>
           </div>
           <div class="doc-card">
+            <h3>准备 OSM 路网数据</h3>
+            <p>使用 OSM 方案前，需要先在本地下载目标区域的路网数据。推荐使用 OSMnx 自动下载：</p>
+            <pre><code>import osmnx as ox
+
+# 按城市名称下载
+graph = ox.graph_from_place("上海市青浦区", network_type="walk")
+ox.save_graphml(graph, "data/roads.graphml")
+
+# 或按经纬度范围下载
+graph = ox.graph_from_bbox(31.25, 31.20, 121.50, 121.45, network_type="walk")
+ox.save_graphml(graph, "data/roads.graphml")</code></pre>
+            <p>也可以从 OpenStreetMap 官网或 Geofabrik 下载 <code>.osm</code> 或 <code>.pbf</code> 文件，放入 <code>data/</code> 目录。</p>
+            <p class="doc-tip">路网数据文件较大，建议只下载分析所需的区域，避免占用过多磁盘空间。</p>
+          </div>
+          <div class="doc-card">
             <h3>环境变量</h3>
             <p>百度地图 API Key 通过环境变量注入，不要写入源码：</p>
             <pre><code># Windows CMD
