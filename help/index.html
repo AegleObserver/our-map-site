@@ -188,15 +188,29 @@ graph = ox.graph_from_bbox(31.25, 31.20, 121.50, 121.45, network_type="walk")
 ox.save_graphml(graph, "data/roads.graphml")</code></pre>
               <p>也可以从 OpenStreetMap 官网或 Geofabrik 下载 <code>.osm</code> 或 <code>.pbf</code> 文件，放入 <code>data/</code> 目录。</p>
               <blockquote><p>路网数据文件较大，建议只下载分析所需的区域，避免占用过多磁盘空间。</p></blockquote>
-              <p><strong>4. 启动后端与前端</strong></p>
-              <pre><code># 后端
+              <p><strong>4. 创建并激活虚拟环境</strong></p>
+              <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
+              <pre><code># Windows CMD
+python -m venv .venv
+.venv\Scripts\activate.bat
+
+# Windows PowerShell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# macOS / Linux (bash/zsh)
+python3 -m venv .venv
+source .venv/bin/activate</code></pre>
+              <p>激活后终端提示符前会出现 <code>(.venv)</code> 标识。如需退出虚拟环境，执行 <code>deactivate</code>。</p>
+              <p><strong>5. 启动后端与前端</strong></p>
+              <pre><code># 后端（在虚拟环境中）
 pip install -r requirements.txt
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 
-# 前端
+# 前端（新开终端，无需虚拟环境）
 npm install
 npm run dev</code></pre>
-              <p><strong>5. 在浏览器中打开</strong></p>
+              <p><strong>6. 在浏览器中打开</strong></p>
               <p>访问终端提示的地址（通常为 <code>http://localhost:5173</code>），即可进入分析工作台。前端开发服务器会代理后端请求，确认后端已在 <code>:8000</code> 端口运行。</p>
 
               <h2 id="u-workflow">操作流程</h2>
