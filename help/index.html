@@ -124,7 +124,7 @@
                 <tbody>
                   <tr><td>操作系统</td><td>Windows 10/11、macOS 12+、主流 64 位 Linux</td></tr>
                   <tr><td>Node.js</td><td>20 或更高版本（发布站与前端）</td></tr>
-                  <tr><td>Python</td><td>3.10 或更高版本（分析后端）</td></tr>
+                  <tr><td>Python</td><td>3.11 或更高版本（分析后端与启动脚本）</td></tr>
                   <tr><td>浏览器</td><td>Chrome / Edge / Firefox 近两年稳定版</td></tr>
                   <tr><td>磁盘空间</td><td>发布站约 50 MB；完整分析工具建议预留 2 GB</td></tr>
                   <tr><td>内存</td><td>建议 8 GB 及以上（分析工具）</td></tr>
@@ -132,18 +132,40 @@
               </table>
               <p>运行完整分析工具时还需要：</p>
               <ul>
-                <li>Python 3.10 或更高版本</li>
+                <li>Python 3.11 或更高版本</li>
                 <li>Git（可选，用于克隆源码）</li>
                 <li>百度地图开放平台账号（申请 API Key）</li>
               </ul>
 
               <h2 id="u-start">开始使用</h2>
-              <h3>方式一：在线 Demo（推荐新用户）</h3>
+              <h3>方式一：双击启动脚本（最简单，推荐）</h3>
+              <p>前提：已安装 Python 3.11 或更高版本、Node.js 18 或更高版本。虚拟环境、pip 与 npm 依赖、<code>.env</code> 配置文件都由启动脚本自动准备，不需要手动执行 <code>pip install</code> 或 <code>npm install</code>。</p>
+              <p><strong>1. 取得源码并进入项目根目录</strong></p>
+              <pre><code>git clone https://github.com/PennEwan/Baidu-map.git
+cd Baidu-map</code></pre>
+              <p><strong>2. 双击启动器</strong></p>
+              <ul>
+                <li>Windows：双击 <code>start.bat</code></li>
+                <li>macOS：双击 <code>start.command</code></li>
+                <li>Linux：在终端执行 <code>./start.command</code></li>
+              </ul>
+              <p><strong>3. 按提示填写百度地图 AK</strong></p>
+              <p>启动器会依次完成环境预检、生成配置文件、检查环境变量、确认运行模式、安装依赖五件事。遇到空的变量时，它会告诉你<strong>写在哪、为什么需要、从哪拿</strong>，再让你选择回车填写或按 <code>s</code> 跳过。</p>
+              <p>两个变量都可以跳过：跳过服务端 AK 后会退回离线 <code>synthetic</code> 模式（只画半径约 1080 米的正圆，不调用百度），跳过浏览器端 AK 后前端底图回退到本地示意图。</p>
+              <p><strong>4. 等待就绪，浏览器自动打开</strong></p>
+              <p>前后端都起来后浏览器会自动打开 <code>http://127.0.0.1:5173/</code>，后端在 <code>http://127.0.0.1:8000</code>，<code>/health</code> 可查状态。按 <code>Ctrl+C</code> 一次同时停止前后端。</p>
+              <blockquote><p>启动器只是薄薄一层封装，内部调用 <code>python dev.py</code>。需要更细的控制时：</p></blockquote>
+              <pre><code>python dev.py setup           # 只做环境准备，不启动服务
+python dev.py doctor          # 只体检：版本、依赖、变量、端口，缺什么报什么
+python dev.py backend         # 只启动后端
+python dev.py frontend        # 只启动前端</code></pre>
+              <h3>方式二：在线 Demo（推荐新用户）</h3>
               <ol>
                 <li>打开首页，点击「打开 Demo」进入演示环境。</li>
                 <li>Demo 使用固定模拟数据，用于快速体验完整流程，<strong>不代表真实社区结论</strong>。</li>
               </ol>
-              <h3>方式二：本地运行完整分析</h3>
+              <h3>方式三：手动启动本地分析服务</h3>
+              <p>启动脚本失败或需要完全自己控制环境时，按下面的步骤分别启动后端和前端。</p>
               <p><strong>1. 申请百度地图 API</strong></p>
               <p>访问百度地图开放平台：<a href="https://lbsyun.baidu.com/" target="_blank" rel="noreferrer">https://lbsyun.baidu.com/</a></p>
               <ol>
