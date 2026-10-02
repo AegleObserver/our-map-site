@@ -24,6 +24,7 @@
       .help-content h1 { margin-bottom: 8px; font-size: 28px; letter-spacing: -.05em; }
       .help-content h2 { margin: 36px 0 14px; font-size: 19px; letter-spacing: -.03em; }
       .help-content h3 { margin: 24px 0 10px; font-size: 15px; }
+      .help-content h4 { margin: 20px 0 8px; font-size: 14px; }
       .help-content p { margin-bottom: 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
       .help-content ul, .help-content ol { margin: 0 0 14px; padding-left: 22px; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
       .help-content li { margin-bottom: 6px; }
@@ -157,8 +158,24 @@ cd Baidu-map</code></pre>
               <blockquote><p>启动器只是薄薄一层封装，内部调用 <code>python dev.py</code>。需要更细的控制时：</p></blockquote>
               <pre><code>python dev.py setup           # 只做环境准备，不启动服务
 python dev.py doctor          # 只体检：版本、依赖、变量、端口，缺什么报什么
+python dev.py osm             # 只管路网数据：报现状，按需下载并校验
 python dev.py backend         # 只启动后端
 python dev.py frontend        # 只启动前端</code></pre>
+              <h4>关于 OSM 路网数据（可选，但影响一半功能）</h4>
+              <p><code>data/osm/</code> 里的步行路网数据解压后约 195 MB（下载包约 60 MB），<strong>不随代码分发</strong>，刚下载的副本一定没有它。启动器会在启动前检查一次并说明后果，缺数据<strong>不会</strong>拦住你使用。</p>
+              <table>
+                <thead><tr><th>功能</th><th>没有路网数据时</th></tr></thead>
+                <tbody>
+                  <tr><td>百度边界搜索（E8.2）成圈</td><td>照常</td></tr>
+                  <tr><td>设施检索、实测路线核验、报告</td><td>照常</td></tr>
+                  <tr><td>1000 米服务覆盖、灰区清单、服务覆盖热力</td><td>标为「未评估」，<strong>不会写成 0</strong></td></tr>
+                  <tr><td>OSM＋百度</td><td>仍可提交，结果标为「部分证据」</td></tr>
+                </tbody>
+              </table>
+              <p>补数据：</p>
+              <pre><code>python dev.py osm            # 从项目 Release 下载路网包，校验 sha256 后解到 data/osm/</code></pre>
+              <p>Release 里还没有发布路网包时，脚本会指向 Releases 页面与仓库内的 <code>data/osm/README.md</code>。自己构建路网需要先下载 PBF 再用 Pyrosm 构图（Windows 上还需要 MSVC 或 conda），步骤见该文件——这是给需要自定义数据的人准备的，不是普通用户的安装路径。</p>
+              <blockquote><p>路网数据版本必须与 <code>backend/.env</code> 的 <code>OSM_DATA_VERSION</code> 一致，否则 OSM＋百度 只会给出降级结果。<code>python dev.py doctor</code> 会读 <code>data/osm/graph_metadata.json</code> 核对并在不一致时直接报出来。</p></blockquote>
               <h3>方式二：在线 Demo（推荐新用户）</h3>
               <ol>
                 <li>打开首页，点击「打开 Demo」进入演示环境。</li>
@@ -197,19 +214,16 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
                 <li><strong>macOS：</strong>编辑 <code>~/.zshrc</code>（或 <code>~/.bash_profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.zshrc</code>。</li>
                 <li><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</li>
               </ul>
-              <p><strong>3. 准备 OSM 路网数据</strong></p>
-              <p>使用 OSM 方案前，需要先在本地下载目标区域的路网数据。推荐使用 OSMnx 自动下载：</p>
-              <pre><code>import osmnx as ox
-
-# 按城市名称下载
-graph = ox.graph_from_place("上海市青浦区", network_type="walk")
-ox.save_graphml(graph, "data/roads.graphml")
-
-# 或按经纬度范围下载
-graph = ox.graph_from_bbox(31.25, 31.20, 121.50, 121.45, network_type="walk")
-ox.save_graphml(graph, "data/roads.graphml")</code></pre>
-              <p>也可以从 OpenStreetMap 官网或 Geofabrik 下载 <code>.osm</code> 或 <code>.pbf</code> 文件，放入 <code>data/</code> 目录。</p>
-              <blockquote><p>路网数据文件较大，建议只下载分析所需的区域，避免占用过多磁盘空间。</p></blockquote>
+              <p><strong>3. 准备 OSM 路网数据（只有需要 OSM＋百度与服务覆盖时才做）</strong></p>
+              <p>后端读的是 <code>backend/scripts/prepare_osm_graph.py</code> 生成的图缓存（<code>data/osm/shanghai.osm-cache</code>），不是 OSMnx 的 <code>.graphml</code>；放错文件不会报错，只会被当成缺路网。最省事的做法还是上一节的 <code>python dev.py osm</code>。</p>
+              <p>手动构建的完整步骤（下载 Geofabrik PBF → 构图 → 导出障碍层与覆盖边界）见仓库内的 <code>data/osm/README.md</code>，要点：</p>
+              <ol>
+                <li>从 <a href="https://download.geofabrik.de/asia/china/shanghai.html" target="_blank" rel="noreferrer">Geofabrik Shanghai</a> 下载 <code>.osm.pbf</code> 与 <code>.poly</code>，放入 <code>data/osm/</code>，并按 README 中给出的 SHA256 核对。</li>
+                <li>安装构图依赖（<code>backend/requirements-osm-build.txt</code>，含 Pyrosm / OSMnx / GeoPandas）。Windows 上 <code>cykhash</code> 可能需要 MSVC，README 给出了 conda-forge 的替代方案。</li>
+                <li>在 <code>backend</code> 目录设置 <code>OSM_PBF_PATH</code>、<code>OSM_GRAPH_CACHE_PATH</code>、<code>OSM_COVERAGE_BOUNDARY_PATH</code>、<code>OSM_DATA_VERSION</code>，然后运行 <code>python scripts/prepare_osm_graph.py</code>。该脚本<strong>不会联网下载</strong>，只读本地 PBF。</li>
+                <li>构图完成后核对 <code>backend/.env</code> 的 <code>OSM_DATA_VERSION</code> 与 <code>data/osm/graph_metadata.json</code> 里的版本一致；不一致时后端只会给出降级结果。</li>
+              </ol>
+              <blockquote><p>路网数据解压后约 195 MB（下载包约 60 MB），且不进版本库；应用启动不读它，首次用到 OSM 才惰性加载。缺它时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
               <p><strong>4. 创建并激活虚拟环境</strong></p>
               <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
               <pre><code># Windows CMD
