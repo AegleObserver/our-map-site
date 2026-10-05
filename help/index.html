@@ -158,14 +158,17 @@ cd Baidu-map</code></pre>
               <blockquote><p>启动器只是薄薄一层封装，内部调用 <code>python dev.py</code>。需要更细的控制时：</p></blockquote>
               <pre><code>python dev.py setup           # 只做环境准备，不启动服务
 python dev.py doctor          # 只体检：版本、依赖、变量、端口，缺什么报什么
-python dev.py osm             # 只管路网数据：报现状，按需下载并校验
 python dev.py backend         # 只启动后端
 python dev.py frontend        # 只启动前端</code></pre>
               <h4>关于 OSM 路网数据（可选组件）</h4>
-              <p>OSM（OpenStreetMap）步行路网用于服务覆盖和 OSM＋百度分析。普通用户不需要自己下载 PBF、安装 Pyrosm、配置 MSVC/conda，也不需要配置代理。第一次启动时，<code>start.bat</code>、<code>start.command</code> 会调用 <code>dev.py</code> 检查本地数据；缺少数据时可以自动下载并校验，下载完成后才安装到 <code>data/osm/</code>。</p>
-              <p>项目当前使用固定快照 <strong><code>geofabrik-shanghai-260913</code></strong>，主下载地址是：</p>
-              <p><a href="https://github.com/PennEwan/Baidu-map/raw/refs/heads/osm-runtime-data/osm-shanghai-geofabrik-260913-runtime.zip" target="_blank" rel="noreferrer">下载 OSM 上海运行时数据包（固定版本）</a></p>
-              <p>下载包包含运行所需的图缓存、边界和元数据。<code>dev.py</code> 会校验包内的 SHA256；版本或校验不匹配时不会把文件当作有效路网使用。下载包约 60 MB，解压后约 195 MB。</p>
+              <p>OSM（OpenStreetMap）步行路网用于服务覆盖和 OSM＋百度分析。<code>dev.py</code> 只负责依赖、环境和服务启动；地区包的下载、构建和激活统一由 <code>setup_osm_region.py</code> 处理。</p>
+              <p>拿到部署方提供的运行包 ZIP 时，一条命令即可下载、校验、解压并激活（ZIP 需包含 <code>data/osm/manifest.json</code>）：</p>
+              <pre><code>python backend/scripts/setup_osm_region.py download --url &lt;runtime-package-url&gt; --region &lt;region-id&gt; --sha256 &lt;archive-sha256&gt;</code></pre>
+              <p>已经解压到本地时，查看并激活地区包：</p>
+              <pre><code>python backend/scripts/setup_osm_region.py list
+python backend/scripts/setup_osm_region.py select --region &lt;region-id&gt;</code></pre>
+              <p>选择器会校验图缓存、覆盖边界、数据版本和米制 CRS，并写入 <code>backend/.env</code>。暂时不使用 OSM 时执行：</p>
+              <pre><code>python backend/scripts/setup_osm_region.py clear</code></pre>
               <table>
                 <thead><tr><th>功能</th><th>没有路网数据时</th></tr></thead>
                 <tbody>
@@ -175,10 +178,8 @@ python dev.py frontend        # 只启动前端</code></pre>
                   <tr><td>OSM＋百度</td><td>仍可提交，结果标为「部分证据」</td></tr>
                 </tbody>
               </table>
-              <p>补数据（通常只需执行这一条命令）：</p>
-              <pre><code>python dev.py osm            # 自动下载固定版本，校验 SHA256 后安装到 data/osm/</code></pre>
-              <p>如果暂时无法下载，应用仍会启动基础功能；依赖 OSM 的结果会标为「未评估」或「部分证据」，不会把缺少数据写成 0。重新联网后再次运行 <code>python dev.py osm</code> 即可补齐。启动脚本不会要求普通用户手动设置代理。</p>
-              <blockquote><p>路网数据版本必须与 <code>backend/.env</code> 的 <code>OSM_DATA_VERSION</code> 一致，否则 OSM＋百度 只会给出降级结果。<code>python dev.py doctor</code> 会读 <code>data/osm/graph_metadata.json</code> 核对并在不一致时直接报出来。</p></blockquote>
+              <p>如果没有选择路网包，应用仍会启动基础功能；依赖 OSM 的结果会标为「未评估」或「部分证据」，不会把缺少数据写成 0。路网数据版本、投影 CRS、图缓存和覆盖边界必须来自同一个地区包，否则 OSM＋百度会降级。</p>
+              <blockquote><p>当前 <code>dev.py doctor</code> 只检查基础环境；地区包的版本、投影和文件完整性由 <code>setup_osm_region.py</code> 在选择时校验。没有地区包时，OSM＋百度不会把未知区域当成没有设施或不可达。</p></blockquote>
               <p>路网数据来自 OpenStreetMap contributors，按 <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noreferrer">Open Database License（ODbL）</a> 提供。使用或再分发数据时请保留 <code>© OpenStreetMap contributors</code> 署名；项目代码与 OSM 数据使用不同的许可证。该数据是固定快照，不代表实时道路状态，也不保证包含所有门禁、校园通道和小区内部道路。</p>
               <h3>方式二：在线 Demo（推荐新用户）</h3>
               <ol>
@@ -219,14 +220,12 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
                 <li><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</li>
               </ul>
               <p><strong>3. 高级用法：自行构建 OSM 路网数据（普通用户无需执行）</strong></p>
-              <p>后端读的是 <code>backend/scripts/prepare_osm_graph.py</code> 生成的图缓存（<code>data/osm/shanghai.osm-cache</code>），不是 OSMnx 的 <code>.graphml</code>；放错文件不会报错，只会被当成缺路网。最省事的做法还是上一节的 <code>python dev.py osm</code>。</p>
-              <p>只有需要自定义区域或重新生成数据时，才需要手动构建。完整步骤（下载 Geofabrik PBF → 构图 → 导出障碍层与覆盖边界）见仓库内的 <code>data/osm/README.md</code>，要点：</p>
+              <p>后端读的是 <code>setup_osm_region.py</code> 生成的图缓存（例如 <code>data/osm/regions/&lt;region-id&gt;/&lt;region-id&gt;.osm-cache</code>），不是 OSMnx 的 <code>.graphml</code>。需要自定义地区或重建数据时，先从对应 Geofabrik 页面下载 <code>.osm.pbf</code> 与 <code>.poly</code>，安装一次构图依赖，再执行一条构建命令：</p>
               <ol>
-                <li>从 <a href="https://download.geofabrik.de/asia/china/shanghai.html" target="_blank" rel="noreferrer">Geofabrik Shanghai</a> 下载 <code>.osm.pbf</code> 与 <code>.poly</code>，放入 <code>data/osm/</code>，并按 README 中给出的 SHA256 核对。</li>
-                <li>安装构图依赖（<code>backend/requirements-osm-build.txt</code>，含 Pyrosm / OSMnx / GeoPandas）。Windows 上 <code>cykhash</code> 可能需要 MSVC，README 给出了 conda-forge 的替代方案。</li>
-                <li>在 <code>backend</code> 目录设置 <code>OSM_PBF_PATH</code>、<code>OSM_GRAPH_CACHE_PATH</code>、<code>OSM_COVERAGE_BOUNDARY_PATH</code>、<code>OSM_DATA_VERSION</code>，然后运行 <code>python scripts/prepare_osm_graph.py</code>。该脚本<strong>不会联网下载</strong>，只读本地 PBF。</li>
-                <li>构图完成后核对 <code>backend/.env</code> 的 <code>OSM_DATA_VERSION</code> 与 <code>data/osm/graph_metadata.json</code> 里的版本一致；不一致时后端只会给出降级结果。</li>
+                <li>安装构图依赖：<code>python -m pip install -r backend/requirements-osm-build.txt</code>。</li>
+                <li>运行 <code>python backend/scripts/setup_osm_region.py build --region &lt;region-id&gt; --pbf &lt;path-to-pbf&gt; --coverage &lt;path-to-poly&gt; --version &lt;snapshot-id&gt; --metric-crs &lt;metric-crs&gt; --source &lt;pbf-url&gt; --downloaded-at &lt;yyyy-mm-dd&gt;</code>。</li>
               </ol>
+              <p>该命令会生成图缓存、风险层、障碍层和 <code>manifest.json</code>，完成校验并直接激活地区；不再需要手动设置多项 OSM 环境变量、分别运行三个脚本或手工补 manifest。<code>--no-simplify</code> 可用于排查构图问题，重建已有地区时追加 <code>--force</code>。</p>
               <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库；应用首次用到 OSM 时才惰性加载。缺它时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
               <p><strong>4. 创建并激活虚拟环境</strong></p>
               <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
