@@ -24,10 +24,10 @@
   document.querySelectorAll('[data-config-status]').forEach((node) => {
     const key = node.getAttribute('data-config-status');
     if (key === 'demo' && config.demoUrl) {
-      node.textContent = '在线 Demo 地址已配置，可直接开始体验';
+      node.textContent = '离线 Demo 已就绪（固定模拟数据），可直接体验；真实分析需在本机运行';
     }
     if (key === 'demo-detail' && config.demoUrl) {
-      node.textContent = 'Demo 使用固定模拟数据，适合快速体验从选点到报告的完整流程。真实分析工作台不在线托管，需要时请在本机配置并运行。';
+      node.textContent = '离线 Demo 使用固定模拟数据，适合快速浏览从选点到报告的完整流程。在线不提供真实分析工作台，需要时请在本机配置并运行。';
     }
   });
 

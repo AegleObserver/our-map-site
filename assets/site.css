@@ -111,6 +111,7 @@ h1 em, h2 em { color: var(--teal); font-style: normal; }
 .perf-table th { color: #8ed5bd; font-size: 10px; font-weight: 800; letter-spacing: .12em; }
 .perf-table td { color: rgba(251, 250, 245, .78); }
 .perf-table td:first-child { color: rgba(251, 250, 245, .9); font-weight: 600; }
+.perf-note { margin: 0; color: rgba(251, 250, 245, .6); font-size: 12px; letter-spacing: .02em; }
 
 .stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .stats-strip > div { display: flex; align-items: baseline; gap: 13px; min-height: 105px; padding: 25px 22px; border-right: 1px solid var(--line); }
