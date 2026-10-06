@@ -161,7 +161,7 @@ python dev.py doctor          # 只体检：版本、依赖、变量、端口，
 python dev.py backend         # 只启动后端
 python dev.py frontend        # 只启动前端</code></pre>
               <h4>关于 OSM 路网数据（可选组件）</h4>
-              <p>OSM（OpenStreetMap）步行路网用于服务覆盖和 OSM＋百度分析。<code>dev.py</code> 只负责依赖、环境和服务启动；地区包的下载、构建和激活统一由 <code>setup_osm_region.py</code> 处理。</p>
+              <p>OSM（OpenStreetMap）步行路网用于服务覆盖和 OSM＋百度分析。<code>dev.py</code> 只负责依赖、环境和服务启动；地区包的下载、构建和激活统一由 <code>setup_osm_region.py</code> 处理。运行包的来源、下载参数和各命令的详细用法，见 <a href="./OSM路网数据下载说明.md">OSM 路网数据下载说明</a>。</p>
               <p>拿到部署方提供的运行包 ZIP 时，一条命令即可下载、校验、解压并激活（ZIP 需包含 <code>data/osm/manifest.json</code>）：</p>
               <pre><code>python backend/scripts/setup_osm_region.py download --url &lt;runtime-package-url&gt; --region &lt;region-id&gt; --sha256 &lt;archive-sha256&gt;</code></pre>
               <p>已经解压到本地时，查看并激活地区包：</p>
