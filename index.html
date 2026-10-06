@@ -137,10 +137,10 @@
           </div>
           <div class="screenshot-carousel reveal">
             <div class="screenshot-track">
-              <figure class="screenshot-card"><img src="/figure/01-select-location.png" alt="选择分析位置" /><figcaption>选择分析位置</figcaption></figure>
-              <figure class="screenshot-card"><img src="/figure/02-walkable-area.png" alt="查看步行生活圈" /><figcaption>查看步行生活圈</figcaption></figure>
-              <figure class="screenshot-card"><img src="/figure/03-facilities.png" alt="核对民生设施" /><figcaption>核对民生设施</figcaption></figure>
-              <figure class="screenshot-card"><img src="/figure/04-report.png" alt="生成体检报告" /><figcaption>生成体检报告</figcaption></figure>
+              <figure class="screenshot-card"><img src="./figure/01-select-location.png" alt="选择分析位置" /><figcaption>选择分析位置</figcaption></figure>
+              <figure class="screenshot-card"><img src="./figure/02-walkable-area.png" alt="查看步行生活圈" /><figcaption>查看步行生活圈</figcaption></figure>
+              <figure class="screenshot-card"><img src="./figure/03-facilities.png" alt="核对民生设施" /><figcaption>核对民生设施</figcaption></figure>
+              <figure class="screenshot-card"><img src="./figure/04-report.png" alt="生成体检报告" /><figcaption>生成体检报告</figcaption></figure>
             </div>
           </div>
         </div>
@@ -157,8 +157,8 @@
             <div class="arch-row arch-result"><div class="arch-label"><span class="arch-dot"></span>证据层</div><div class="arch-items"><span>中心点与条件</span><span>圈面与设施</span><span>质量 / 来源 / 限制</span></div></div>
           </div>
            <div class="algorithm-grid">
-             <article class="algorithm reveal"><span class="algo-label">E8.2</span><h3>百度边界搜索</h3><p>通过多个方向、局部扫描和边界细化获取 15 分钟圈证据，结果保留预算停止和未知区域。</p><span class="algo-status">浏览器工作台入口</span></article>
-             <article class="algorithm reveal"><span class="algo-label">HYBRID 1.5</span><h3>OSM ＋ 百度</h3><p>使用 OSM 路网辅助范围构建，再用百度步行结果验证；硬约束与显示几何分开处理。</p><span class="algo-status">浏览器工作台入口</span></article>
+             <article class="algorithm reveal"><span class="algo-label">E8.2</span><h3>百度边界搜索</h3><p>通过多个方向、局部扫描和边界细化获取 15 分钟圈证据，结果保留预算停止和未知区域。</p><span class="algo-status">本机配置后运行</span></article>
+             <article class="algorithm reveal"><span class="algo-label">HYBRID 1.5</span><h3>OSM ＋ 百度</h3><p>使用 OSM 路网辅助范围构建，再用百度步行结果验证；硬约束与显示几何分开处理。</p><span class="algo-status">本机配置后运行</span></article>
              <article class="algorithm algorithm-muted reveal"><span class="algo-label">E8.3</span><h3>POI 引导联合构圈</h3><p>离线实验能力，保留在算法与后端工具中，当前不作为浏览器或生产 HTTP 入口。</p><span class="algo-status">离线实验 · 未上线</span></article>
            </div>
            <div class="perf-table-wrap reveal">
@@ -195,11 +195,11 @@
           <div class="roadmap reveal">
             <div class="road-step active"><span class="road-mark">01</span><div><strong>项目发布站</strong><p>静态介绍、方法、边界和导航</p></div><b>当前</b></div>
             <div class="road-step active"><span class="road-mark">02</span><div><strong>离线 Demo</strong><p>固定场景、四类状态、完整报告</p></div><b>可运行</b></div>
-            <div class="road-step"><span class="road-mark">03</span><div><strong>受控 API</strong><p>独立后端、鉴权、限流和预算</p></div><b>准备中</b></div>
-            <div class="road-step"><span class="road-mark">04</span><div><strong>正式开放</strong><p>真实样例核验与独立精度材料</p></div><b>前置条件</b></div>
+            <div class="road-step"><span class="road-mark">03</span><div><strong>本地使用</strong><p>用户克隆源码，在本机配置并运行分析服务</p></div><b>本地运行</b></div>
+            <div class="road-step"><span class="road-mark">04</span><div><strong>离线能力完善</strong><p>持续验证模拟流程、算法边界与数据说明</p></div><b>持续进行</b></div>
           </div>
           <div id="demo-status" class="launch-panel reveal">
-            <div><span class="launch-kicker">START HERE / 从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">在线 Demo 地址尚未配置。你可以先在 Demo 仓库本地启动，完整走一遍“选点 → 体检 → 报告”流程。</p></div>
+            <div><span class="launch-kicker">START HERE / 从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">在线 Demo 使用固定模拟数据。项目不提供在线分析工作台；需要本地运行时，请从源码仓库获取项目并按主仓库 README 配置启动。</p></div>
             <div class="launch-actions"><a class="button button-light" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="repositoryUrl" href="#demo-status">查看源代码 <span aria-hidden="true">↗</span></a></div>
           </div>
         </div>
@@ -226,12 +226,12 @@
               <span class="resource-name">在线 Demo</span>
               <span class="resource-desc">固定模拟数据，完整走一遍流程</span>
             </a>
-            <a class="resource-card" data-config-link="appUrl" href="#resources">
+            <a class="resource-card" data-config-link="repositoryUrl" href="#resources">
               <span class="resource-icon" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
               </span>
-              <span class="resource-name">正式工作台</span>
-              <span class="resource-desc">独立后端、鉴权与限流</span>
+              <span class="resource-name">本地配置与运行</span>
+              <span class="resource-desc">克隆源码后按主仓库 README 在本机启动</span>
             </a>
             <a class="resource-card" data-config-link="releasesUrl" href="#resources">
               <span class="resource-icon" aria-hidden="true">
@@ -283,8 +283,8 @@
       <div class="shell footer-grid">
         <div class="footer-brand"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span><span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span></a><p>把社区步行可达性和民生设施分布放到一张可解释地图上。</p></div>
         <div><p class="footer-label">PROJECT</p><a href="#capabilities">产品能力</a><a href="#method">方法与架构</a><a href="#trust">可信度边界</a></div>
-        <div><p class="footer-label">LINKS</p><a data-config-link="demoUrl" href="#demo-status">在线 Demo</a><a data-config-link="appUrl" href="#demo-status">正式工作台</a><a data-config-link="repositoryUrl" href="#demo-status">GitHub 源码</a></div>
-        <div><p class="footer-label">STATUS</p><span>静态介绍站 · 可独立访问</span><span data-config-status="app">正式分析服务尚未对公网开放</span><a data-config-link="releasesUrl" href="#demo-status">版本与 Releases ↗</a></div>
+        <div><p class="footer-label">LINKS</p><a data-config-link="demoUrl" href="#demo-status">在线 Demo（固定模拟数据）</a><a data-config-link="repositoryUrl" href="#demo-status">源码与本地运行</a></div>
+        <div><p class="footer-label">STATUS</p><span>静态介绍站 · 固定数据 Demo</span><span>不提供在线分析工作台；真实分析需在本机配置运行</span><a data-config-link="releasesUrl" href="#demo-status">版本与 Releases ↗</a></div>
       </div>
       <div class="shell footer-bottom"><span>15 分钟生活圈 · 项目发布站</span><span>Demo 数据为模拟数据，不是真实社区结论。</span></div>
     </footer>

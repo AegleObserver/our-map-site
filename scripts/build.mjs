@@ -15,8 +15,7 @@ function configuredUrl(name, fallback = '') {
 }
 
 const config = {
-  demoUrl: configuredUrl('PUBLIC_DEMO_URL'),
-  appUrl: configuredUrl('PUBLIC_APP_URL'),
+  demoUrl: configuredUrl('PUBLIC_DEMO_URL', 'https://aegleobserver.github.io/our-map-demo/'),
   repositoryUrl: configuredUrl('PUBLIC_REPOSITORY_URL', 'https://github.com/PennEwan/Baidu-map'),
   releasesUrl: configuredUrl('PUBLIC_RELEASES_URL', 'https://github.com/PennEwan/Baidu-map/releases')
 };

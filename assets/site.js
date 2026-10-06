@@ -1,7 +1,6 @@
 (function () {
   const config = Object.assign({
     demoUrl: '',
-    appUrl: '',
     repositoryUrl: '',
     releasesUrl: ''
   }, window.SITE_CONFIG || {});
@@ -28,10 +27,7 @@
       node.textContent = '在线 Demo 地址已配置，可直接开始体验';
     }
     if (key === 'demo-detail' && config.demoUrl) {
-      node.textContent = 'Demo 使用固定模拟数据，适合快速体验从选点到报告的完整流程。正式分析服务需要独立后端。';
-    }
-    if (key === 'app' && config.appUrl) {
-      node.textContent = '正式工作台入口已配置';
+      node.textContent = 'Demo 使用固定模拟数据，适合快速体验从选点到报告的完整流程。真实分析工作台不在线托管，需要时请在本机配置并运行。';
     }
   });
 

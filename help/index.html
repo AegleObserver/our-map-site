@@ -343,6 +343,9 @@ npm run dev</code></pre>
                   <tr><td><code>POST /api/v1/analysis/hybrid</code></td><td>旧接口</td><td>Hybrid v1.5</td></tr>
                 </tbody>
               </table>
+              <h3>当前体检 v2 请求示例</h3>
+              <p><a href="./sample-data.json" download>下载 POST /api/v2/checkups 请求体示例</a>。该文件只示范字段结构，不是分析结果、Demo 数据或已执行的请求；中心点仅用于格式演示，不能据此推断真实社区结论。实际提交前应使用新的 <code>clientRequestId</code>，并确认后端权限与调用预算。</p>
+              <p><a href="./requirements.txt" download>下载后端锁定依赖清单</a>（镜像 <code>backend/requirements.lock.txt</code>）。完整安装还需在原工程中按后端 README 安装本地算法包；此清单不单独构成后端部署步骤。</p>
               <p>错误信封也按路径分开。校验失败不回显原始输入、URL 或密钥。</p>
 
               <h2 id="a-checkup">体检 v2：主路径</h2>

@@ -1,19 +1,16 @@
 {
+  "schemaVersion": "checkup-v1",
+  "clientRequestId": "sample-checkup-example-001",
+  "engine": "baidu_e82",
   "center": {
-    "name": "分析中心点",
-    "lat": 31.2304,
-    "lng": 121.4737
+    "lng": 121.513925,
+    "lat": 31.313079
   },
-  "walkableMinutes": 15,
-  "serviceDistanceKm": 1,
-  "facilityCategories": ["菜市场", "药店", "小学"],
-  "facilities": [
-    { "name": "青禾菜市场", "category": "菜市场", "lat": 31.2321, "lng": 121.475, "inWalkableArea": true, "source": "demo" },
-    { "name": "便民药店", "category": "药店", "lat": 31.2287, "lng": 121.4702, "inWalkableArea": true, "source": "demo" },
-    { "name": "青禾小学", "category": "小学", "lat": 31.2262, "lng": 121.4778, "inWalkableArea": false, "source": "demo" }
-  ],
-  "unknownDirections": ["西南"],
-  "quality": "partial",
-  "generatedAt": "2026-09-28T00:00:00Z",
-  "disclaimer": "固定模拟数据，不代表真实社区结论。"
+  "coordinateSystem": "bd09ll",
+  "isochrone": {
+    "budget": 400
+  },
+  "facilities": {
+    "categories": ["shopping", "medical", "education"]
+  }
 }
