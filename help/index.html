@@ -8,19 +8,15 @@
     <title>帮助文档 | 15 分钟生活圈</title>
     <link rel="stylesheet" href="../assets/site.css" />
     <style>
-      .help-layout { display: grid; grid-template-columns: 240px 1fr; gap: 48px; align-items: start; }
-      .help-sidebar { position: sticky; top: 100px; padding-top: 70px; }
-      .help-sidebar-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
-      .help-sidebar-brand .brand-mark { width: 32px; height: 32px; font-size: 11px; }
-      .help-sidebar-brand .brand-copy strong { font-size: 15px; }
-      .help-sidebar-brand .brand-copy small { font-size: 7px; }
+      .help-layout { display: grid; grid-template-columns: 240px 1fr; gap: 24px; align-items: start; }
+      .help-sidebar { position: sticky; top: 100px; margin: -32px 0 0 -24px; }
       .help-nav-label { margin: 0 0 12px; color: var(--ink-soft); font-size: 10px; font-weight: 700; letter-spacing: .12em; }
       .help-nav { display: flex; flex-direction: column; gap: 2px; }
       .help-nav a { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 6px; color: var(--ink-soft); font-size: 13px; font-weight: 500; transition: background .15s ease, color .15s ease; }
       .help-nav a:hover { background: var(--teal-pale); color: var(--ink); }
       .help-nav a.active { background: var(--teal-pale); color: var(--teal); font-weight: 600; }
       .help-nav a .nav-icon { width: 16px; height: 16px; flex-shrink: 0; }
-      .help-content { padding-top: 70px; min-width: 0; }
+      .help-content { padding-top: 70px; padding-left: 24px; min-width: 0; border-left: 1px solid var(--line); }
       .help-content h1 { margin-bottom: 8px; font-size: 28px; letter-spacing: -.05em; }
       .help-content h2 { margin: 36px 0 14px; font-size: 19px; letter-spacing: -.03em; }
       .help-content h3 { margin: 24px 0 10px; font-size: 15px; }
@@ -51,8 +47,8 @@
       .help-back:hover { color: var(--teal); }
       @media (max-width: 900px) {
         .help-layout { grid-template-columns: 1fr; }
-        .help-sidebar { position: static; padding-top: 0; margin-bottom: 30px; }
-        .help-content { padding-top: 0; }
+        .help-sidebar { position: static; margin: 0 0 30px; }
+        .help-content { padding-top: 0; padding-left: 0; border-left: 0; }
       }
     </style>
   </head>
@@ -76,12 +72,6 @@
       <div class="shell">
         <div class="help-layout">
           <aside class="help-sidebar">
-            <div class="help-sidebar-brand">
-              <a class="brand" href="../" aria-label="15 分钟生活圈首页">
-                <span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span>
-                <span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span>
-              </a>
-            </div>
             <p class="help-nav-label">文档</p>
             <nav class="help-nav" aria-label="文档导航">
               <a href="#usage" data-nav="usage" class="active">
