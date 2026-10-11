@@ -1,4 +1,4 @@
-import { createReadStream } from 'node:fs';
+import { createReadStream, statSync } from 'node:fs';
 import { access } from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
@@ -18,7 +18,16 @@ try {
 http.createServer(async (request, response) => {
   const requested = decodeURIComponent((request.url || '/').split('?')[0]);
   const relative = requested === '/' ? '/index.html' : requested;
-  const file = path.resolve(root, `.${relative}`);
+  let file = path.resolve(root, `.${relative}`);
+  try {
+    // 目录按 GitHub Pages 的行为落到它的 index.html：站点里有 `./help/` 这样的链接，
+    // 而这里过去会把目录当文件读，ReadStream 抛 EISDIR 直接把预览服务打挂 —— 于是
+    // "本地预览点帮助就崩"，而部署到 Pages 上却是好的。预览要和线上一致才验得准。
+    if (statSync(file).isDirectory()) file = path.join(file, 'index.html');
+  } catch {
+    response.writeHead(404).end('Not found');
+    return;
+  }
   if (!file.startsWith(`${root}${path.sep}`)) {
     response.writeHead(403).end();
     return;
