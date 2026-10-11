@@ -4,11 +4,13 @@
   "metrics": {
     "walkableMinutes": 15,
     "serviceDistanceKm": 1,
-    "facilityCategories": ["菜市场", "药店", "小学"]
+    "facilityCategories": ["医疗健康", "购物消费", "教育", "疗养康养", "餐饮", "金融", "政务与公共服务", "文体休闲", "交通出行", "生活服务"],
+    "facilityCategoryCounts": { "majors": 10, "minors": 31, "coreMajors": 3 }
   },
   "boundaries": [
     "Demo 使用固定模拟数据，不代表真实社区结论。",
-    "15 分钟步行圈与 1 公里分类服务判断是两套独立指标。",
+    "15 分钟步行圈与 1 公里分类服务判断是两套独立指标：都用步行路网，区别是 900 秒与 1000 米两种口径。",
+    "首页截图来自一次真实的本地体检（E8.2、400 档，2026-10-11），结果状态随该次运行如实标注。",
     "GitHub Pages 只承载静态页面，正式分析服务需要独立后端。"
   ]
 }

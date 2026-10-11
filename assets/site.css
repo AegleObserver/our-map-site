@@ -76,6 +76,8 @@ h1 em, h2 em { color: var(--teal); font-style: normal; }
 .map-live { display: flex; align-items: center; gap: 6px; color: var(--teal); font-size: 8px; font-weight: 800; letter-spacing: .12em; }
 .map-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-bright); }
 .map-svg { display: block; width: 100%; height: auto; }
+/* 真实体检截图代替手绘示意图：按 3:2 取景，整幅显示，不裁掉图例与地图署名。 */
+.map-shot { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; background: #e7eee7; }
 .map-bottomline { min-height: 38px; border-top: 1px solid rgba(19, 45, 54, .1); font-size: 8px; letter-spacing: 0; }
 .map-bottomline span { display: inline-flex; align-items: center; gap: 6px; }
 .legend-circle { width: 8px; height: 8px; border: 2px solid var(--teal); border-radius: 50%; background: var(--teal-pale); }
@@ -102,8 +104,14 @@ h1 em, h2 em { color: var(--teal); font-style: normal; }
 .screenshot-carousel { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
 .screenshot-track { display: flex; gap: 20px; width: max-content; }
 .screenshot-card { flex: 0 0 300px; scroll-snap-align: start; margin: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--cream); box-shadow: 0 8px 30px rgba(15, 58, 57, .08); }
-.screenshot-card img { display: block; width: 100%; height: 200px; object-fit: cover; background: var(--paper-deep); }
+/* 截图整幅显示：以前用固定高度 + object-fit:cover 会把报告里的覆盖区间、地图上的
+   图例和署名裁掉。取景已经按 3:2 拍好，这里只按同比例留白，不再裁切。 */
+.screenshot-card img { display: block; width: 100%; aspect-ratio: 3 / 2; height: auto; object-fit: contain; background: var(--paper-deep); }
+.screenshot-card a { display: block; }
+.screenshot-card a:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
 .screenshot-card figcaption { padding: 12px 16px; font-size: 12px; font-weight: 600; color: var(--ink); }
+.screenshot-note { margin: 16px 0 0; color: var(--ink-soft); font-size: 12px; line-height: 1.8; }
+.screenshot-note a { color: var(--teal); }
 
 .perf-table-wrap { margin-top: 60px; overflow-x: auto; }
 .perf-table { width: 100%; border-collapse: collapse; font-size: 12px; }

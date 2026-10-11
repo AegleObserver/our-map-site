@@ -93,6 +93,7 @@
 
             <div id="page-usage" class="doc-page active">
               <h1>使用说明</h1>
+              <blockquote><p>核对日期：2026-10-11，对应体检契约 <code>checkup-v1</code>、设施目录 <code>poi-categories-v2.3</code>。本页写的是<strong>本机运行的体检工作台</strong>；发布站上的「离线 Demo」用固定模拟数据，两者不要混读。</p></blockquote>
               <div class="help-toc">
                 <p class="help-toc-title">本页目录</p>
                 <ol>
@@ -114,7 +115,7 @@
                 <thead><tr><th>项目</th><th>要求</th></tr></thead>
                 <tbody>
                   <tr><td>操作系统</td><td>Windows 10/11、macOS 12+、主流 64 位 Linux</td></tr>
-                  <tr><td>Node.js</td><td>20 或更高版本（发布站与前端）</td></tr>
+                  <tr><td>Node.js</td><td><code>^20.19.0 || &gt;=22.12.0</code>（发布站与前端；20.x 需 20.19.0 以上，22.x 需 22.12.0 以上）</td></tr>
                   <tr><td>Python</td><td>3.11 或更高版本（分析后端与启动脚本）</td></tr>
                   <tr><td>浏览器</td><td>Chrome / Edge / Firefox 近两年稳定版</td></tr>
                   <tr><td>磁盘空间</td><td>发布站约 50 MB；完整分析工具建议预留 2 GB</td></tr>
@@ -130,7 +131,7 @@
 
               <h2 id="u-start">开始使用</h2>
               <h3>方式一：双击启动脚本（最简单，推荐）</h3>
-              <p>前提：已安装 Python 3.11 或更高版本、Node.js 18 或更高版本。虚拟环境、pip 与 npm 依赖、<code>.env</code> 配置文件都由启动脚本自动准备，不需要手动执行 <code>pip install</code> 或 <code>npm install</code>。</p>
+              <p>前提：已安装 Python 3.11 或更高版本，以及 Node.js <code>^20.19.0 || &gt;=22.12.0</code>。虚拟环境、pip 与 npm 依赖、<code>.env</code> 配置文件都由启动脚本自动准备，不需要手动执行 <code>pip install</code> 或 <code>npm install</code>。</p>
               <p><strong>1. 取得源码并进入项目根目录</strong></p>
               <pre><code>git clone https://github.com/PennEwan/Baidu-map.git
 cd Baidu-map</code></pre>
@@ -142,7 +143,11 @@ cd Baidu-map</code></pre>
               </ul>
               <p><strong>3. 按提示填写百度地图 AK</strong></p>
               <p>启动器会依次完成环境预检、生成配置文件、检查环境变量、确认运行模式、安装依赖五件事。遇到空的变量时，它会告诉你<strong>写在哪、为什么需要、从哪拿</strong>，再让你选择回车填写或按 <code>s</code> 跳过。</p>
-              <p>两个变量都可以跳过：跳过服务端 AK 后会退回离线 <code>synthetic</code> 模式（只画半径约 1080 米的正圆，不调用百度），跳过浏览器端 AK 后前端底图回退到本地示意图。</p>
+              <p>两个变量都可以跳过，但结果不一样：</p>
+              <ul>
+                <li>跳过<strong>服务端</strong> AK（<code>backend/.env</code> 的 <code>BAIDU_MAP_AK</code>）会退回离线 <code>synthetic</code> 模式：E8.2 只画半径约 1080 米的正圆，设施检索、服务覆盖与路线核验都不运行。</li>
+                <li>跳过<strong>浏览器端</strong> AK（<code>life-circle-demo/.env.local</code> 的 <code>VITE_BAIDU_MAP_AK</code>）<strong>不会</strong>退回示意图：底图显示「地图不可用」，仍可手动输入坐标继续体检。本地示意图只出现在显式的 <code>demo</code> 模式页面，而启动器打开的是体检工作台。</li>
+              </ul>
               <p><strong>4. 等待就绪，浏览器自动打开</strong></p>
               <p>前后端都起来后浏览器会自动打开 <code>http://127.0.0.1:5173/</code>，后端在 <code>http://127.0.0.1:8000</code>，<code>/health</code> 可查状态。按 <code>Ctrl+C</code> 一次同时停止前后端。</p>
               <blockquote><p>启动器只是薄薄一层封装，内部调用 <code>python dev.py</code>。需要更细的控制时：</p></blockquote>
@@ -165,7 +170,7 @@ python backend/scripts/setup_osm_region.py select --region &lt;region-id&gt;</co
                   <tr><td>百度边界搜索（E8.2）成圈</td><td>照常</td></tr>
                   <tr><td>设施检索、实测路线核验、报告</td><td>照常</td></tr>
                   <tr><td>1000 米服务覆盖、灰区清单、服务覆盖热力</td><td>标为「未评估」，<strong>不会写成 0</strong></td></tr>
-                  <tr><td>OSM＋百度</td><td>仍可提交，结果标为「部分证据」</td></tr>
+                  <tr><td>OSM＋百度</td><td>有服务端 AK 但没有地区包时仍可提交，结果标为「部分证据」；连服务端 AK 都没有（或合成模式）时，提交会在建立任务<strong>之前</strong>被具名拒绝，不会静默改成 E8.2</td></tr>
                 </tbody>
               </table>
               <p>如果没有选择路网包，应用仍会启动基础功能；依赖 OSM 的结果会标为「未评估」或「部分证据」，不会把缺少数据写成 0。路网数据版本、投影 CRS、图缓存和覆盖边界必须来自同一个地区包，否则 OSM＋百度会降级。</p>
@@ -195,6 +200,15 @@ python backend/scripts/setup_osm_region.py select --region &lt;region-id&gt;</co
               </ol>
               <blockquote><p>AK 相当于账号凭证，请勿提交到公开仓库或分享给他人。如怀疑泄露，请在控制台重置。</p></blockquote>
               <p><strong>2. 配置环境变量</strong></p>
+              <p>后端与浏览器用<strong>两个不同的 AK</strong>，写进两个文件（都可以用环境变量临时覆盖）：</p>
+              <table>
+                <thead><tr><th>变量</th><th>用在哪</th><th>写在哪里</th><th>注意</th></tr></thead>
+                <tbody>
+                  <tr><td><code>BAIDU_MAP_AK</code></td><td>服务端步行路线与地点检索</td><td><code>backend/.env</code></td><td>服务端密钥；不得放进前端，也不得入库</td></tr>
+                  <tr><td><code>VITE_BAIDU_MAP_AK</code></td><td>浏览器底图与地图选点</td><td><code>life-circle-demo/.env.local</code></td><td>浏览器端 AK；需在控制台配置来源白名单</td></tr>
+                </tbody>
+              </table>
+              <p>下面以后端变量为例：</p>
               <pre><code># Windows CMD
 set BAIDU_MAP_AK=你的百度AK
 
@@ -209,6 +223,7 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
                 <li><strong>macOS：</strong>编辑 <code>~/.zshrc</code>（或 <code>~/.bash_profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.zshrc</code>。</li>
                 <li><strong>Linux：</strong>编辑 <code>~/.bashrc</code>（或 <code>~/.profile</code>），添加 <code>export BAIDU_MAP_AK="你的百度AK"</code>，然后执行 <code>source ~/.bashrc</code>。</li>
               </ul>
+              <p>浏览器端 AK 是另一个变量、另一个文件：在 <code>life-circle-demo/.env.local</code> 里写 <code>VITE_BAIDU_MAP_AK=你的浏览器端AK</code>（该文件不入库）。<code>VITE_*</code> 变量在构建时注入，改完要重启开发服务器或重新构建才生效；<strong>不要把服务端步行 AK 写进这个变量</strong>，它会被打包进浏览器代码。</p>
               <p><strong>3. 高级用法：自行构建 OSM 路网数据（普通用户无需执行）</strong></p>
               <p>后端读的是 <code>setup_osm_region.py</code> 生成的图缓存（例如 <code>data/osm/regions/&lt;region-id&gt;/&lt;region-id&gt;.osm-cache</code>），不是 OSMnx 的 <code>.graphml</code>。需要自定义地区或重建数据时，先从对应 Geofabrik 页面下载 <code>.osm.pbf</code> 与 <code>.poly</code>，安装一次构图依赖，再执行一条构建命令：</p>
               <ol>
@@ -216,7 +231,8 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
                 <li>运行 <code>python backend/scripts/setup_osm_region.py build --region &lt;region-id&gt; --pbf &lt;path-to-pbf&gt; --coverage &lt;path-to-poly&gt; --version &lt;snapshot-id&gt; --metric-crs &lt;metric-crs&gt; --source &lt;pbf-url&gt; --downloaded-at &lt;yyyy-mm-dd&gt;</code>。</li>
               </ol>
               <p>该命令会生成图缓存、风险层、障碍层和 <code>manifest.json</code>，完成校验并直接激活地区；不再需要手动设置多项 OSM 环境变量、分别运行三个脚本或手工补 manifest。<code>--no-simplify</code> 可用于排查构图问题，重建已有地区时追加 <code>--force</code>。</p>
-              <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库；应用首次用到 OSM 时才惰性加载。缺它时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
+              <blockquote><p><strong>这些脚本目前属于本地扩展。</strong><code>backend/scripts/setup_osm_region.py</code>、<code>configure_osm_region.py</code> 与 <code>backend/app/osm_package.py</code> 在开发工作区可用，但<strong>尚未纳入版本库索引</strong>：从公开仓库克隆时可能没有它们。先向维护者确认，再按本节操作。</p></blockquote>
+              <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库。选好地区包后，后端会在<strong>服务启动时后台预热</strong>这份路网（<code>/health</code> 先报 <code>loading</code>，就绪后转为 <code>ready</code>），这样第一次体检就不必再等构图；没有地区包时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
               <p><strong>4. 创建并激活虚拟环境</strong></p>
               <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
               <pre><code># Windows CMD
@@ -244,21 +260,21 @@ npm run dev</code></pre>
 
               <h2 id="u-workflow">操作流程</h2>
               <h3>第 1 步：选择分析位置</h3>
-              <p>使用预设样例、在地图上选点，或手动输入经纬度。请确认本次分析从哪个中心点开始。手动输入坐标时使用 WGS84 坐标系，注意顺序为纬度在前、经度在后。</p>
+              <p>使用预设样例、在地图上选点，或手动输入经纬度。请确认本次分析从哪个中心点开始。坐标是 <strong>BD09LL</strong>（百度坐标），<strong>经度在前、纬度在后</strong>，与报告里写明的坐标系一致；经度 −180～180，纬度 −85～85。演示页的坐标输入标着「演示坐标」，口径相同，但它只用于模拟数据。</p>
               <h3>第 2 步：查看步行生活圈</h3>
               <p>在地图上查看 15 分钟可达范围、已知可达区域、未知区域和计算质量。沿步行路网行进，绕行与硬约束都会被保留。</p>
               <h3>第 3 步：核对民生设施</h3>
-              <p>按类别筛选菜市场、药店、小学等设施，查看名称、位置、是否在圈内以及来源证据。</p>
+              <p>按类别查看设施：目录共 10 个大类、31 个检索小类，默认体检核心三类（购物、医疗、教育）。列表按直线距离排序、可点选查步行路线；<strong>是否算「在服务范围内」以返回的步行路线距离为准</strong>，不是直线距离。检索失败、分页截断和「附近确实没有」是三种不同状态，界面不会把它们都写成 0。</p>
               <h3>第 4 步：生成体检报告</h3>
               <p>汇总条件、结果、服务缺口、未知部分、数据来源和限制说明，方便复核与分享。</p>
 
               <h2 id="u-understand">如何理解结果</h2>
               <p><strong>15 分钟圈与 1 公里判断是两套独立指标</strong></p>
               <ul>
-                <li>15 分钟圈：基于步行路网，回答「能走到哪里」。</li>
-                <li>1 公里判断：基于直线距离，回答「周边是否存在某类设施」。</li>
+                <li>15 分钟圈：按<strong>步行路网</strong>回答「15 分钟能走到哪里」，阈值 900 秒。</li>
+                <li>1 公里判断：同样按<strong>步行距离</strong>回答「周边是否存在某类设施」，标准是步行路线 1000 米（含 100 米容差带）。</li>
               </ul>
-              <p>两者不会相互替代，请勿混用。</p>
+              <p>两者用的是同一张步行路网，区别是<strong>时间</strong>与<strong>距离</strong>两种口径，所以不能互相换算，也不能互相替代。直线距离只用来给候选设施排序，不用来下结论。</p>
               <p><strong>「未知区域」是什么意思</strong></p>
               <p>当某方向数据不足、计算预算停止或服务异常时，地图会保留为「未知」，而不会静默标记为不可达。详情可在报告的结果说明中查看。</p>
               <p><strong>结果的可信度边界</strong></p>
@@ -270,7 +286,9 @@ npm run dev</code></pre>
 
               <h2 id="u-faq">常见问题</h2>
               <h3>为什么有些按钮点了没反应？</h3>
-              <p>对应的外部入口尚未配置，页面会显示「待配置」。请联系项目维护者或参考部署说明完成配置。</p>
+              <p>发布站上的外部入口在未配置时会被禁用（按钮变灰、不跳转），不会显示占位文案。本站的三个链接都已配置；本机运行时对应的入口由启动器读取的变量决定。</p>
+              <h3>为什么报告里的覆盖率是一个区间，业务状态又是「部分证据」？</h3>
+              <p>覆盖率的下界～上界来自已评估面积与未知面积：未知部分计入上界，不当成 0。「部分证据」说的是证据的性质——目录尚未经独立核验，也可能有缺页，所以成功跑完也不会标成「完整」。</p>
               <h3>为什么地图上有些地方是空的？</h3>
               <p>这些是未知区域，表示该方向缺少足够数据，并不代表不可达。</p>
               <h3>可以用手机操作吗？</h3>
@@ -318,7 +336,7 @@ npm run dev</code></pre>
                 <li><code>load_settings()</code> 读 <code>backend/.env</code>，进程环境变量优先。</li>
                 <li>建一个 <code>Quota</code>，方向门和地点门分开，全应用共用。</li>
                 <li>建 <code>AnalysisManager</code> 和 <code>HybridManager</code>，与体检共用方向门。</li>
-                <li>建 <code>LazyOsmOfflineEngine</code>，启动时不加载全市图，首次使用时惰性加载。</li>
+                <li>建 <code>LazyOsmOfflineEngine</code>：持有者是惰性的，但选好地区包的部署会<strong>在开始服务时后台预热</strong>全市图，第一次估算或体检因此不必再等构图（就绪前 <code>/health</code> 报 <code>loading</code>）。</li>
                 <li><code>build_checkups</code> 打开体检库、注册两个引擎、注入 <code>Quota</code>。</li>
                 <li>开始对外服务时才 <code>interrupt_unfinished()</code>，把上次没跑完的体检标成中断，不重放已付费请求。</li>
               </ol>
@@ -339,7 +357,7 @@ npm run dev</code></pre>
               <p>错误信封也按路径分开。校验失败不回显原始输入、URL 或密钥。</p>
 
               <h2 id="a-checkup">体检 v2：主路径</h2>
-              <p>编排在 <code>app/checkups/manager.py</code>。同一时刻只跑一个任务，第二个排队而不是 409。任务级截止约 1800 秒。</p>
+              <p>编排在 <code>app/checkups/manager.py</code>。同一时刻只跑一个任务，第二个排队而不是 409。任务级截止约 1800 秒；800 档成圈自己可以用到 1200 秒，编排会在截止上再加 600 秒。</p>
               <p>一次运行按阶段发布<strong>不可变修订</strong>。已付费的阶段结果在取消时仍然冻结，不丢弃。</p>
               <table>
                 <thead><tr><th>阶段</th><th>做什么</th></tr></thead>
@@ -364,7 +382,7 @@ npm run dev</code></pre>
               <ul>
                 <li>核心在 <code>app/algorithms/hybrid_isochrone/</code>，版本 v1.5。</li>
                 <li>档位 200 / 400，计算域默认投影平面上 ±1200 米正方形。</li>
-                <li>调用链：惰性加载全市图 → OsmGuidance 采样引导 → 百度步行核验 → 成面并扣除水体。</li>
+                <li>调用链：全市图（选了地区包时启动已预热）→ OsmGuidance 采样引导 → 百度步行核验 → 成面并扣除水体。</li>
                 <li>缺图、版本不符时就绪项标 <code>degraded</code> 并降低质量。</li>
               </ul>
 
@@ -391,9 +409,9 @@ npm run dev</code></pre>
               <table>
                 <thead><tr><th>路径</th><th>内容</th><th>重启后</th></tr></thead>
                 <tbody>
-                  <tr><td><code>backend/.checkups/</code></td><td>体检元数据和已发布修订</td><td>未完成任务标中断；已发布修订保留</td></tr>
+                  <tr><td><code>backend/.checkups/</code></td><td>体检元数据和已发布修订</td><td>未完成任务标中断；已发布修订按保留期保留，到期后只留一份<strong>冻结汇总</strong>（结论、区间、计数、停止原因），明细（设施名、UID、地址、坐标、几何）不再提供</td></tr>
                   <tr><td><code>backend/.quota/</code></td><td>本应用日消耗</td><td>保留</td></tr>
-                  <tr><td><code>data/osm/</code></td><td>PBF、图缓存、障碍与风险</td><td>启动时不读；首次使用才加载</td></tr>
+                  <tr><td><code>data/osm/</code></td><td>PBF、图缓存、障碍与风险</td><td>配置了地区包时<strong>启动后台预热</strong>（先 <code>loading</code> 后 <code>ready</code>）；未配置则评估阶段标为未评估</td></tr>
                 </tbody>
               </table>
               <p>部署约定：<code>--workers 1</code>。</p>
