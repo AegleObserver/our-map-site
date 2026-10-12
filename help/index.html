@@ -231,7 +231,7 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
                 <li>运行 <code>python backend/scripts/setup_osm_region.py build --region &lt;region-id&gt; --pbf &lt;path-to-pbf&gt; --coverage &lt;path-to-poly&gt; --version &lt;snapshot-id&gt; --metric-crs &lt;metric-crs&gt; --source &lt;pbf-url&gt; --downloaded-at &lt;yyyy-mm-dd&gt;</code>。</li>
               </ol>
               <p>该命令会生成图缓存、风险层、障碍层和 <code>manifest.json</code>，完成校验并直接激活地区；不再需要手动设置多项 OSM 环境变量、分别运行三个脚本或手工补 manifest。<code>--no-simplify</code> 可用于排查构图问题，重建已有地区时追加 <code>--force</code>。</p>
-              <blockquote><p><strong>这些脚本目前属于本地扩展。</strong><code>backend/scripts/setup_osm_region.py</code>、<code>configure_osm_region.py</code> 与 <code>backend/app/osm_package.py</code> 在开发工作区可用，但<strong>尚未纳入版本库索引</strong>：从公开仓库克隆时可能没有它们。先向维护者确认，再按本节操作。</p></blockquote>
+              <blockquote><p><strong>这些脚本在主仓库里。</strong><code>backend/scripts/setup_osm_region.py</code>、<code>configure_osm_region.py</code>、<code>backend/app/osm_package.py</code> 与 <code>backend/docs/OSM_REGION_SETUP.md</code> 随主仓库提供；如果你的检出里没有它们，先更新到最新 <code>main</code>，或向维护者确认该版本是否已包含这些工具。</p></blockquote>
               <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库。选好地区包后，后端会在<strong>服务启动时后台预热</strong>这份路网（<code>/health</code> 先报 <code>loading</code>，就绪后转为 <code>ready</code>），这样第一次体检就不必再等构图；没有地区包时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
               <p><strong>4. 创建并激活虚拟环境</strong></p>
               <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
