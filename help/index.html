@@ -108,7 +108,7 @@
 
               <h2 id="u-overview">概述</h2>
               <p>「15 分钟生活圈」帮助你从任意一个中心点出发，理解步行可达范围、周边民生设施分布以及可能存在的服务缺口。本文档面向使用者，介绍如何上手、各功能入口和使用时需要注意的事项。</p>
-              <p>发布站本身是纯静态页面，不依赖后端即可独立访问；完整分析功能需要另行启动后端与前端服务。</p>
+              <p>发布站本身是纯静态页面，不依赖后端即可独立访问。想直接体验真实分析，可以打开<a href="https://linyu-life-circle.netlify.app" target="_blank" rel="noreferrer">在线工作台</a>（连的是已部署的后端）；它需要后端在线，后端不可用时页面会明确报服务不可用，不会回退成模拟数据。也可以在本机配置后端与前端，见下文。</p>
 
               <h2 id="u-requirements">环境要求</h2>
               <table>
@@ -118,7 +118,7 @@
                   <tr><td>Node.js</td><td><code>^20.19.0 || &gt;=22.12.0</code>（发布站与前端；20.x 需 20.19.0 以上，22.x 需 22.12.0 以上）</td></tr>
                   <tr><td>Python</td><td>3.11 或更高版本（分析后端与启动脚本）</td></tr>
                   <tr><td>浏览器</td><td>Chrome / Edge / Firefox 近两年稳定版</td></tr>
-                  <tr><td>磁盘空间</td><td>发布站约 50 MB；完整分析工具建议预留 2 GB</td></tr>
+                  <tr><td>磁盘空间</td><td>发布站约 5 MB（含截图）；完整分析工具建议预留 2 GB</td></tr>
                   <tr><td>内存</td><td>建议 8 GB 及以上（分析工具）</td></tr>
                 </tbody>
               </table>
@@ -145,7 +145,7 @@ cd Baidu-map</code></pre>
               <p>启动器会依次完成环境预检、生成配置文件、检查环境变量、确认运行模式、安装依赖五件事。遇到空的变量时，它会告诉你<strong>写在哪、为什么需要、从哪拿</strong>，再让你选择回车填写或按 <code>s</code> 跳过。</p>
               <p>两个变量都可以跳过，但结果不一样：</p>
               <ul>
-                <li>跳过<strong>服务端</strong> AK（<code>backend/.env</code> 的 <code>BAIDU_MAP_AK</code>）会退回离线 <code>synthetic</code> 模式：E8.2 只画半径约 1080 米的正圆，设施检索、服务覆盖与路线核验都不运行。</li>
+                <li>跳过<strong>服务端</strong> AK（<code>backend/.env</code> 的 <code>BAIDU_MAP_AK</code>）时，启动器会询问是否切到离线 <code>synthetic</code> 模式（回车切换、<code>k</code> 保持 baidu；非交互环境自动切换）：E8.2 只画半径约 1080 米的正圆，设施检索、服务覆盖与路线核验都不运行。</li>
                 <li>跳过<strong>浏览器端</strong> AK（<code>life-circle-demo/.env.local</code> 的 <code>VITE_BAIDU_MAP_AK</code>）<strong>不会</strong>退回示意图：底图显示「地图不可用」，仍可手动输入坐标继续体检。本地示意图只出现在显式的 <code>demo</code> 模式页面，而启动器打开的是体检工作台。</li>
               </ul>
               <p><strong>4. 等待就绪，浏览器自动打开</strong></p>
@@ -176,10 +176,10 @@ python backend/scripts/setup_osm_region.py select --region &lt;region-id&gt;</co
               <p>如果没有选择路网包，应用仍会启动基础功能；依赖 OSM 的结果会标为「未评估」或「部分证据」，不会把缺少数据写成 0。路网数据版本、投影 CRS、图缓存和覆盖边界必须来自同一个地区包，否则 OSM＋百度会降级。</p>
               <blockquote><p>当前 <code>dev.py doctor</code> 只检查基础环境；地区包的版本、投影和文件完整性由 <code>setup_osm_region.py</code> 在选择时校验。没有地区包时，OSM＋百度不会把未知区域当成没有设施或不可达。</p></blockquote>
               <p>路网数据来自 OpenStreetMap contributors，按 <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noreferrer">Open Database License（ODbL）</a> 提供。使用或再分发数据时请保留 <code>© OpenStreetMap contributors</code> 署名；项目代码与 OSM 数据使用不同的许可证。该数据是固定快照，不代表实时道路状态，也不保证包含所有门禁、校园通道和小区内部道路。</p>
-              <h3>方式二：在线 Demo（推荐新用户）</h3>
+              <h3>方式二：在线入口（无需安装）</h3>
               <ol>
-                <li>打开首页，点击「打开 Demo」进入演示环境。</li>
-                <li>Demo 使用固定模拟数据，用于快速体验完整流程，<strong>不代表真实社区结论</strong>。</li>
+                <li><strong>在线工作台</strong>：打开 <a href="https://linyu-life-circle.netlify.app" target="_blank" rel="noreferrer">linyu-life-circle.netlify.app</a>，用真实后端跑完整体检流程。它需要后端在线；后端不可用时页面会提示服务不可用，不会静默回退成模拟数据。</li>
+                <li><strong>离线 Demo</strong>：打开首页，点击「体验离线 Demo」，用固定模拟数据快速走一遍流程，<strong>不代表真实社区结论</strong>。</li>
               </ol>
               <h3>方式三：手动启动本地分析服务</h3>
               <p>启动脚本失败或需要完全自己控制环境时，按下面的步骤分别启动后端和前端。</p>
@@ -232,7 +232,7 @@ export BAIDU_MAP_AK="你的百度AK"</code></pre>
               </ol>
               <p>该命令会生成图缓存、风险层、障碍层和 <code>manifest.json</code>，完成校验并直接激活地区；不再需要手动设置多项 OSM 环境变量、分别运行三个脚本或手工补 manifest。<code>--no-simplify</code> 可用于排查构图问题，重建已有地区时追加 <code>--force</code>。</p>
               <blockquote><p><strong>这些脚本在主仓库里。</strong><code>backend/scripts/setup_osm_region.py</code>、<code>configure_osm_region.py</code>、<code>backend/app/osm_package.py</code> 与 <code>backend/docs/OSM_REGION_SETUP.md</code> 随主仓库提供；如果你的检出里没有它们，先更新到最新 <code>main</code>，或向维护者确认该版本是否已包含这些工具。</p></blockquote>
-              <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库。选好地区包后，后端会在<strong>服务启动时后台预热</strong>这份路网（<code>/health</code> 先报 <code>loading</code>，就绪后转为 <code>ready</code>），这样第一次体检就不必再等构图；没有地区包时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
+              <blockquote><p>手动构建得到的路网数据也应记录来源、快照版本和 SHA256，并保留 OSM/ODbL 署名。路网数据不进版本库（图缓存与 <code>graph_metadata.json</code> 已由 <code>.gitignore</code> 覆盖；地区包里的边界、风险层与 <code>manifest.json</code> 需要人工确认后再提交）。选好地区包后，后端会在<strong>服务启动时后台预热</strong>这份路网（<code>/health</code> 先报 <code>loading</code>，就绪后转为 <code>ready</code>），这样第一次体检就不必再等构图；没有地区包时评估阶段标为「未评估」，不会写成 0。</p></blockquote>
               <p><strong>4. 创建并激活虚拟环境</strong></p>
               <p>建议使用 Python 虚拟环境隔离后端依赖：</p>
               <pre><code># Windows CMD
@@ -248,15 +248,15 @@ python3 -m venv .venv
 source .venv/bin/activate</code></pre>
               <p>激活后终端提示符前会出现 <code>(.venv)</code> 标识。如需退出虚拟环境，执行 <code>deactivate</code>。</p>
               <p><strong>5. 启动后端与前端</strong></p>
-              <pre><code># 后端（在虚拟环境中）
-pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+              <pre><code># 后端（在虚拟环境中，于 backend 目录执行）
+python -m pip install -r requirements.lock.txt -e ../life-circle-algorithm
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 --no-access-log
 
-# 前端（新开终端，无需虚拟环境）
+# 前端（新开终端，无需虚拟环境，于 life-circle-demo 目录执行）
 npm install
 npm run dev</code></pre>
               <p><strong>6. 在浏览器中打开</strong></p>
-              <p>访问终端提示的地址（通常为 <code>http://localhost:5173</code>），即可进入分析工作台。前端开发服务器会代理后端请求，确认后端已在 <code>:8000</code> 端口运行。</p>
+              <p>访问终端提示的地址（通常为 <code>http://127.0.0.1:5173</code>），即可进入分析工作台。前端通过 <code>VITE_API_BASE_URL</code> 直连后端（开发时由启动脚本写入 <code>life-circle-demo/.env.local</code>，默认 <code>http://127.0.0.1:8000</code>）；这里没有 Vite 代理，请确认后端已在 <code>:8000</code> 端口运行。</p>
 
               <h2 id="u-workflow">操作流程</h2>
               <h3>第 1 步：选择分析位置</h3>
@@ -314,23 +314,25 @@ npm run dev</code></pre>
               </div>
 
               <h2 id="a-repo">仓库结构</h2>
-              <pre><code>baidu-map/
+              <pre><code>Baidu-map/
   life-circle-algorithm/   可安装的 Python 包 life_circle
   backend/                 FastAPI 应用
   life-circle-demo/        React 工作台
   data/osm/                OSM 图缓存与边界
   data/water-reviews/      水系复核
-  docs/                    项目级说明</code></pre>
+  docs/                    项目级说明
+  scripts/、dev.py         仓库布局检查与本地启动</code></pre>
+              <p>发布站与离线 Demo 是另外两个独立仓库（<code>our-map-site</code>、<code>our-map-demo</code>），不在这个目录里。</p>
               <p>三者的依赖方向是固定的：</p>
               <ul>
-                <li><code>life_circle</code> 不认识 HTTP、体检或前端，提供共享模型与工具。</li>
+                <li><code>life_circle</code> 提供共享模型与工具，其中包含可选的百度 HTTP 适配器（<code>providers.py</code>）；它不认识体检与前端。</li>
                 <li><code>backend</code> 以可编辑安装依赖这个包，再在 <code>app/</code> 里实现产品。</li>
                 <li>前端不装算法包，只通过 HTTP 契约说话。</li>
               </ul>
               <p>生产成圈<strong>不</strong>走历史自适应网格。线上百度边界搜索走 <code>backend/tools/endpoint_multicross_boundary.py</code>，由 <code>app/algorithms/baidu_e82.py</code> 适配成任务结果。</p>
 
               <h2 id="a-runtime">运行时总览</h2>
-              <p>一个进程、一个 worker。任务管理器、限流门和内存中的旧任务都假设单进程；多 worker 会把配额和并发限制拆成多份。</p>
+              <p>一个进程、一个 worker。任务管理器、限流门和内存中的旧任务都假设单进程；多 worker 会把进程内的 QPS 门与任务队列拆成多份（日账本是跨进程的 SQLite 事务账本，不受影响）。</p>
               <p><code>app/main.py</code> 的 <code>create_app</code> 是唯一装配点：</p>
               <ol>
                 <li><code>load_settings()</code> 读 <code>backend/.env</code>，进程环境变量优先。</li>
@@ -365,7 +367,7 @@ npm run dev</code></pre>
                   <tr><td>成圈</td><td>调用引擎 compute-only 接缝，得到 IsochroneSnapshot</td></tr>
                   <tr><td>设施</td><td>在冻结圈面上检索、分类、去重</td></tr>
                   <tr><td>评估</td><td>用全市步行图做 1000 米服务场</td></tr>
-                  <tr><td>核验</td><td>120 次路线预算抽检</td></tr>
+                  <tr><td>核验</td><td>120 次路线预算：中心可达性 40 次 ＋ 覆盖抽检 80 次</td></tr>
                   <tr><td>报告</td><td>复述已冻结的评估与核验，不重算</td></tr>
                 </tbody>
               </table>
@@ -383,14 +385,14 @@ npm run dev</code></pre>
                 <li>核心在 <code>app/algorithms/hybrid_isochrone/</code>，版本 v1.5。</li>
                 <li>档位 200 / 400，计算域默认投影平面上 ±1200 米正方形。</li>
                 <li>调用链：全市图（选了地区包时启动已预热）→ OsmGuidance 采样引导 → 百度步行核验 → 成面并扣除水体。</li>
-                <li>缺图、版本不符时就绪项标 <code>degraded</code> 并降低质量。</li>
+                <li>缺图、版本不符时逐项给出就绪警告，并把质量从 <code>usable</code> 降为 <code>partial</code>（字面 <code>degraded</code> 标记只出现在旧 Hybrid 接口）。</li>
               </ul>
 
               <h2 id="a-infra">共享基础设施</h2>
               <h3>配额</h3>
-              <p>方向服务和地点服务各有门、各有日预算，日界是 Asia/Shanghai。账本在 <code>backend/.quota/quota.sqlite3</code>。</p>
+              <p>方向服务与地点服务各有限流／并发门，但只有地点服务带日预算；日界是 Asia/Shanghai。账本在 <code>backend/.quota/quota.sqlite3</code>。</p>
               <h3>坐标</h3>
-              <p>线上几何一律是 BD09LL，经度在前，<strong>不是</strong> WGS84 GeoJSON。米制计算用 <code>EPSG:32651</code>（上海）。</p>
+              <p>线上几何一律是 BD09LL，经度在前，<strong>不是</strong> WGS84 GeoJSON。米制计算分两套：OSM 与服务覆盖用地区包配置的米制 CRS（上海地区包是 <code>EPSG:32651</code>，代码默认值是 <code>EPSG:3857</code>），E8.2、POI 与路线核验用 <code>life_circle</code> 的 <code>LocalProjection</code> 局部平面。</p>
               <h3>设施目录与距离规则</h3>
               <p>类别字典在 <code>app/categories.json</code>。距离规则在 <code>app/service_rules.py</code>。900 秒是成圈阈值；1000 米是设施服务标准。二者不是同一个数。</p>
               <h3>缓存</h3>
@@ -441,7 +443,7 @@ npm run dev</code></pre>
                 <li>圈外邻近设施不能计入圈内数量。</li>
                 <li>业务状态不以 <code>complete</code> 表示目录已核全。</li>
                 <li>全应用只有一对百度限流门。</li>
-                <li>日志和错误响应不记录 AK、完整 URL 或异常原文。</li>
+                <li>错误响应不回显原始输入、URL、AK 或异常原文；服务端日志同样过滤 AK 与完整 URL（异常堆栈仍会写入仅运维可见的服务端日志）。</li>
               </ul>
             </div>
           </div>

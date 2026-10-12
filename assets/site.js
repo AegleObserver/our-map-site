@@ -1,5 +1,6 @@
 (function () {
   const config = Object.assign({
+    appUrl: '',
     demoUrl: '',
     repositoryUrl: '',
     releasesUrl: ''
@@ -24,10 +25,14 @@
   document.querySelectorAll('[data-config-status]').forEach((node) => {
     const key = node.getAttribute('data-config-status');
     if (key === 'demo' && config.demoUrl) {
-      node.textContent = '离线 Demo 已就绪（固定模拟数据），可直接体验；真实分析需在本机运行';
+      node.textContent = config.appUrl
+        ? '在线工作台连的是已部署后端；离线 Demo 是固定模拟数据，两者不要混读'
+        : '离线 Demo 已就绪（固定模拟数据），可直接体验；真实分析需在本机运行';
     }
     if (key === 'demo-detail' && config.demoUrl) {
-      node.textContent = 'Demo 是固定模拟数据，打开就能用；这里不提供在线分析工作台。需要真实分析时，请按主仓库 README 在本机配置运行。';
+      node.textContent = config.appUrl
+        ? '在线工作台用真实后端跑完整体检，需要后端在线；离线 Demo 是固定模拟数据，打开就能用。两者的结论不要混读。'
+        : 'Demo 是固定模拟数据，打开就能用；需要真实分析时，请按主仓库 README 在本机配置运行。';
     }
   });
 

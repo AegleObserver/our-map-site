@@ -65,6 +65,8 @@ h1 em, h2 em { color: var(--teal); font-style: normal; }
 .button:hover { transform: translateY(-2px); }
 .button-primary { color: var(--paper); background: var(--teal); box-shadow: 0 8px 24px rgba(11, 119, 111, .2); }
 .button-primary:hover { background: #075f5a; }
+.button-outline { color: var(--ink); border-color: rgba(16, 43, 53, .22); background: transparent; }
+.button-outline:hover { border-color: var(--ink); background: rgba(16, 43, 53, .05); }
 .text-link { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-size: 13px; font-weight: 700; }
 .text-link span { color: var(--teal); font-size: 17px; transition: transform .2s ease; }
 .text-link:hover span { transform: translateY(3px); }

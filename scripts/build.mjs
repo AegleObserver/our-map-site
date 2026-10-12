@@ -15,6 +15,7 @@ function configuredUrl(name, fallback = '') {
 }
 
 const config = {
+  appUrl: configuredUrl('PUBLIC_APP_URL', 'https://linyu-life-circle.netlify.app'),
   demoUrl: configuredUrl('PUBLIC_DEMO_URL', 'https://aegleobserver.github.io/our-map-demo/'),
   repositoryUrl: configuredUrl('PUBLIC_REPOSITORY_URL', 'https://github.com/PennEwan/Baidu-map'),
   releasesUrl: configuredUrl('PUBLIC_RELEASES_URL', 'https://github.com/PennEwan/Baidu-map/releases')

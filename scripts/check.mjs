@@ -13,14 +13,13 @@ for (const relative of requiredFiles) {
 }
 
 const html = await readFile(path.join(root, 'index.html'), 'utf8');
-for (const marker of ['#capabilities', '#method', '#trust', '#roadmap', 'data-config-link="demoUrl"']) {
+for (const marker of ['#capabilities', '#method', '#trust', '#roadmap', 'data-config-link="demoUrl"', 'data-config-link="appUrl"']) {
   if (!html.includes(marker)) throw new Error(`Missing required page marker: ${marker}`);
 }
 if (/BAIDU_[A-Z_]*AK\s*[:=]/i.test(html)) throw new Error('A service key must not be embedded in the site source');
-if (html.includes('data-config-link="appUrl"')) throw new Error('An online workbench link is not part of this site plan');
-for (const relative of ['config.js', 'scripts/build.mjs', '.github/workflows/deploy-pages.yml', 'assets/site.js']) {
-  if (/PUBLIC_APP_URL|\bappUrl\b/.test(await readFile(path.join(root, relative), 'utf8'))) {
-    throw new Error(`The site plan must not configure an online workbench URL: ${relative}`);
+for (const relative of ['config.js', 'scripts/build.mjs', '.github/workflows/deploy-pages.yml']) {
+  if (!/PUBLIC_APP_URL|\bappUrl\b/.test(await readFile(path.join(root, relative), 'utf8'))) {
+    throw new Error(`The online workbench URL must be configured in ${relative}`);
   }
 }
 

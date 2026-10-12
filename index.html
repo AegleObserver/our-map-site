@@ -43,7 +43,7 @@
           <a href="#method">实现方法</a>
           <a href="#trust">使用限制</a>
           <a href="#roadmap">项目进展</a>
-          <a class="nav-cta" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a>
+          <a class="nav-cta" data-config-link="appUrl" href="#demo-status">打开工作台 <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
@@ -55,10 +55,11 @@
           <h1>从一个中心点，<br /><em>看看 15 分钟</em>能走到哪里</h1>
           <p class="hero-lede">输入位置后，可查看 15 分钟步行范围、周边各类民生设施，以及数据不足的区域。</p>
           <div class="hero-actions">
-            <a class="button button-primary" data-config-link="demoUrl" href="#demo-status">体验离线 Demo <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" data-config-link="appUrl" href="#demo-status">打开在线工作台 <span aria-hidden="true">↗</span></a>
+            <a class="button button-outline" data-config-link="demoUrl" href="#demo-status">体验离线 Demo <span aria-hidden="true">↗</span></a>
             <a class="text-link" href="#method">了解方法 <span aria-hidden="true">↓</span></a>
           </div>
-          <p class="hero-note"><span class="status-pip"></span><span data-config-status="demo">离线 Demo 地址待配置，可先查看本地启动说明</span></p>
+          <p class="hero-note"><span class="status-pip"></span><span data-config-status="demo">在线工作台连的是已部署后端；离线 Demo 是固定模拟数据</span></p>
         </div>
         <div class="hero-visual reveal">
           <div class="map-card">
@@ -157,8 +158,8 @@
             <div class="road-step"><span class="road-mark">04</span><div><strong>离线能力完善</strong><p>持续验证模拟流程、算法边界与数据说明</p></div><b>持续进行</b></div>
           </div>
           <div id="demo-status" class="launch-panel reveal">
-            <div><span class="launch-kicker">从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">Demo 是固定模拟数据，打开就能用；这里不提供在线分析工作台。需要真实分析时，请按主仓库 README 在本机配置运行。</p></div>
-            <div class="launch-actions"><a class="button button-light" data-config-link="demoUrl" href="#demo-status">打开 Demo <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="repositoryUrl" href="#demo-status">查看源代码 <span aria-hidden="true">↗</span></a></div>
+            <div><span class="launch-kicker">从这里开始</span><h2>想先看它怎么工作？</h2><p data-config-status="demo-detail">在线工作台用真实后端跑完整体检，需要后端在线；离线 Demo 是固定模拟数据，打开就能用。</p></div>
+            <div class="launch-actions"><a class="button button-light" data-config-link="appUrl" href="#demo-status">打开在线工作台 <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="demoUrl" href="#demo-status">体验离线 Demo <span aria-hidden="true">↗</span></a><a class="button button-outline-light" data-config-link="repositoryUrl" href="#demo-status">查看源代码 <span aria-hidden="true">↗</span></a></div>
           </div>
         </div>
       </section>
@@ -167,7 +168,7 @@
         <div class="shell">
           <div class="section-heading compact reveal">
             <p class="eyebrow">相关链接</p>
-            <h2>源码、Demo 和文档</h2>
+            <h2>工作台、源码和文档</h2>
           </div>
           <div class="resource-grid reveal">
             <a class="resource-card" data-config-link="repositoryUrl" href="#resources">
@@ -176,6 +177,13 @@
               </span>
               <span class="resource-name">GitHub 源码仓库</span>
               <span class="resource-desc">完整代码、Issues 与 Releases</span>
+            </a>
+            <a class="resource-card" data-config-link="appUrl" href="#resources">
+              <span class="resource-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="13" rx="1"/><path d="M8 21h8M12 16v5"/></svg>
+              </span>
+              <span class="resource-name">在线工作台</span>
+              <span class="resource-desc">真实后端，完整体检流程</span>
             </a>
             <a class="resource-card" data-config-link="demoUrl" href="#resources">
               <span class="resource-icon" aria-hidden="true">
@@ -241,8 +249,8 @@
       <div class="shell footer-grid">
         <div class="footer-brand"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"><span>15</span><i></i></span><span class="brand-copy"><strong>生活圈</strong><small>COMMUNITY INSIGHTS</small></span></a><p>查看步行可达范围、周边设施和结论的局限。</p></div>
         <div><p class="footer-label">PROJECT</p><a href="#capabilities">功能</a><a href="#method">实现方法</a><a href="#trust">使用限制</a></div>
-        <div><p class="footer-label">LINKS</p><a data-config-link="demoUrl" href="#demo-status">离线 Demo（固定模拟数据）</a><a data-config-link="repositoryUrl" href="#demo-status">源码与本地运行</a></div>
-        <div><p class="footer-label">STATUS</p><span>静态介绍站 · 固定数据 Demo</span><span>不提供在线分析工作台；真实分析需在本机配置运行</span><a data-config-link="releasesUrl" href="#demo-status">版本与 Releases ↗</a></div>
+        <div><p class="footer-label">LINKS</p><a data-config-link="appUrl" href="#demo-status">在线工作台（真实后端）</a><a data-config-link="demoUrl" href="#demo-status">离线 Demo（固定模拟数据）</a><a data-config-link="repositoryUrl" href="#demo-status">源码与本地运行</a></div>
+        <div><p class="footer-label">STATUS</p><span>静态介绍站 · 在线工作台 + 固定数据 Demo</span><span>在线工作台需要后端在线；后端不可用时页面会明确报错，不会回退成模拟数据</span><a data-config-link="releasesUrl" href="#demo-status">版本与 Releases ↗</a></div>
       </div>
       <div class="shell footer-bottom"><span>15 分钟生活圈 · 项目发布站</span><span>Demo 数据为模拟数据，不是真实社区结论。</span></div>
     </footer>
